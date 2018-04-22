@@ -6,12 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.adapter.BaseAdapter;
 import quangnq.co.languagefunny.adapter.LanguageAdapter;
+import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.entity.LanguageEntity;
 
 /**
@@ -35,20 +38,28 @@ public class LanguageFragment extends BaseFragment<LanguageEntity> implements Ba
     super.onViewCreated(view, savedInstanceState);
     
     ListView listView = (ListView) view.findViewById(R.id.listview);
-    LanguageAdapter adapter = new LanguageAdapter(getActivity(), createListEntity(ARRAY_LANGUAGE));
+    LanguageAdapter adapter = new LanguageAdapter(getActivity(), createListEntity(FileCommon.getListFolderName(PATH_LANGUAGE_FUNNY)));
     listView.setAdapter(adapter);
     adapter.setOnListViewAction(this);
   }
   
   @Override
-  public void onItemShortClick(LanguageEntity languageEntity) {
-  
+  public void onItemShortClick(LanguageEntity entity) {
+    String path = PATH_LANGUAGE_FUNNY + "/" + entity.getId();
+    if (FileCommon.getListFolderName(path).isEmpty()) {
+      Toast.makeText(getActivity(),entity.getId() + " is empty",Toast.LENGTH_SHORT).show();
+      return;
+    }
+    Bundle bundle = new Bundle();
+    bundle.putString(KEY_PATH, path);
+    bundle.putString(KEY_PARENT, entity.getId());
+    forward(new LearningTypeFragment(), bundle);
   }
   
-  protected ArrayList<LanguageEntity> createListEntity (String[] arrId) {
+  private ArrayList<LanguageEntity> createListEntity(ArrayList<String> listId) {
     ArrayList<LanguageEntity> list = new ArrayList<>();
     LanguageEntity entity;
-    for (String id : arrId) {
+    for (String id : listId) {
       entity = new LanguageEntity(id);
       list.add(entity);
     }

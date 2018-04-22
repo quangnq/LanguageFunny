@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+  
+  <TextView
+    android:id="@+id/tv_lesson_learned"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginLeft="5dp"
+    android:gravity="top|start"
+    android:text="Lesson Learned : "
+    android:textColor="#000000"
+    android:textSize="12dp"
+    android:typeface="serif" />
+  
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:background="@color/colorGreen"
+    >
+    <TextView
+      android:id="@+id/screen_title"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:text="Lesson"
+      android:textColor="@color/colorWhite"
+      android:textSize="20dp"
+      android:layout_marginLeft="10dp"
+      android:gravity="center|left"
+      android:layout_weight="1"/>
+    
+    <Button
+      android:id="@+id/btn_enter"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center|left"
+      android:background="@drawable/ic_menu_forward"/>
+    
+  </LinearLayout>
+  
+  <ListView
+    android:id="@+id/listview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+  </ListView>
+</LinearLayout>

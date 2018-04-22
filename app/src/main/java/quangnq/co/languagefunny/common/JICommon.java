@@ -10,11 +10,11 @@ import java.util.Map;
 public interface JICommon {
   String SLASH = "/";
   String KEY_PATH = "path";
+  String KEY_PARENT = "parent";
   
-  String[] ARRAY_LANGUAGE = {"Japanese"};
   String LEVEL_DIFFICULTY = "Difficulty";
   String LEVEL_EASY = "Easy";
-  String PATH_LANGUAGE_FUNNY = "/sdcard/LanguageFunny/";
+  String PATH_LANGUAGE_FUNNY = "/sdcard/LanguageFunny";
   
   
   
@@ -27,8 +27,4 @@ public interface JICommon {
   String FOLDER_LISTENING_QUESTION = "Question";
   String FOLDER_LISTENING_ANSWER = "Answer";
   String FILE_LISTENING_TEXTSCRIPT = "Textscript.txt";
-  
-  HashMap<String, String[]> MAP_LEARNING_TYPE = new HashMap<String, String[]>(){{
-    put(ARRAY_LANGUAGE[0], new String[]{"Vocabulary", "Kanji", "Listening"});
-  }};
 }

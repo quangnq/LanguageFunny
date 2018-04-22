@@ -15,10 +15,15 @@ import quangnq.co.languagefunny.entity.BaseEntity;
 
 public class BaseFragment<E extends BaseEntity> extends Fragment implements JICommon {
   protected String path;
+  protected String parent;
   
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      path = getArguments().getString(KEY_PATH);
+      parent = getArguments().getString(KEY_PARENT);
+    }
   }
   
   /**
