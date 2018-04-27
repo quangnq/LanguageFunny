@@ -13,7 +13,7 @@ public interface JICommon {
   
   String PATH_LANGUAGE_FUNNY = "/sdcard/LanguageFunny";
   
-  
+  String KEY_LIST_QUESTION = "list_question_entity";
   
   /* japanese */
 //  String[] ARRAY_JAPANESE_LEARNING_TYPE = {"vocabulary", "kanji", "listening"};

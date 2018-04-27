@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import quangnq.co.languagefunny.R;
+import quangnq.co.languagefunny.entity.QuestionEntityManager;
 
 /**
  * Created by quang on 4/21/2018.
@@ -20,6 +21,9 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   Button btnChangeLevel, btnAdd, btnConirmNext, btnOne, btnTwo, btnThree, btnFour;
   TextView tvClock, tvQuestionTrue, tvQuestionAnswered, tvQuestionSum, tvConten, tvDisplay;
   EditText edtContent, edtDisplay, edtAnswer;
+  
+  QuestionEntityManager listQuestionEntities = new QuestionEntityManager();
+  int index = 0;
   
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,8 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   }
   
   private void initial() {
-  
+    listQuestionEntities = (QuestionEntityManager) getArguments().getSerializable(KEY_LIST_QUESTION);
+    
   }
   
   @Override

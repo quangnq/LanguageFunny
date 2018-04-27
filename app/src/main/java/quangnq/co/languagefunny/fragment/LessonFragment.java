@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import quangnq.co.languagefunny.adapter.LessonAdapter;
 import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.entity.LessonEntity;
 import quangnq.co.languagefunny.entity.QuestionEntity;
+import quangnq.co.languagefunny.entity.QuestionEntityManager;
 
 /**
  * Created by quang on 03/03/2018.
@@ -57,28 +59,17 @@ public class LessonFragment extends BaseFragment<LessonEntity> implements Lesson
     btnEnter.setOnClickListener(new View.OnClickListener(){
       @Override
       public void onClick(View v) {
-        ArrayList<LessonEntity> list = new ArrayList<>();
-        for (LessonEntity entity : listEntity) {
-          if (entity.isChecked()) {
-            entity.setPath(path + "/" + entity.getId());
-            list.add(entity);
-          }
+        QuestionEntityManager list = new QuestionEntityManager();
+        
+        Toast.makeText(getActivity(), list.createEntityListFromLessons(listEntity), Toast.LENGTH_SHORT).show();
+        if (list.isEmpty()) {
+          return;
         }
         Bundle bundle = new Bundle();
-        bundle.putSerializable("list_entity", list);
+        bundle.putSerializable(KEY_LIST_QUESTION, list);
         forward(new QuestionFragment(), bundle);
       }
     });
-  }
-  
-  private void createQuestion () {
-    ArrayList<QuestionEntity> questionEntities = new ArrayList<>();
-    QuestionEntity questionEntity;
-    ArrayList<String> list = new ArrayList<>();
-    for (LessonEntity entity : listEntity) {
-      list.addAll(FileCommon.readFile(path + "/" + entity.getId()));
-    }
-    
   }
   
   public void onItemShortClick(LessonEntity entity, boolean isChecked) {
