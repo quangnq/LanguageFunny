@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -97,5 +98,28 @@ public class FileCommon {
       }
     }
     return list;
+  }
+  
+  public static void writeFile(String path, ArrayList<String> list, boolean append) {
+    File file = new File(path);
+    FileOutputStream fos = null;
+    try {
+      fos = new FileOutputStream(file, append);
+      for (int i = 0; i < list.size(); i++) {
+        fos.write(list.get(i).getBytes());
+        if (i < list.size() - 1) {
+          fos.write("\n".getBytes());
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (fos != null)
+          fos.close();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
   }
 }

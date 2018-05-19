@@ -39,6 +39,14 @@ public class QuestionEntityManager extends ArrayList<QuestionEntity> implements 
         return "success : execute test";
     }
     
+    public ArrayList<String> createStringList() {
+        ArrayList<String> list = new ArrayList<>();
+        for (QuestionEntity entity : this) {
+            list.add(entity.createString());
+        }
+        return list;
+    }
+    
     public int isContain(QuestionEntity entity) {
         for (int i = 0; i < this.size(); i++ ) {
             if(entity.getId().equals(this.get(i).getId())) {

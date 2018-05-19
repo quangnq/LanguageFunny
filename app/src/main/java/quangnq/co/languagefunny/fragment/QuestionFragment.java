@@ -33,15 +33,18 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_question, container, false);
+    
     btnChangeLevel = (Button) view.findViewById(R.id.btn_change_level);
     btnAdd = (Button) view.findViewById(R.id.btn_add);
     btnConirmNext = (Button) view.findViewById(R.id.btn_conirm_next);
+    
     tvClock = (TextView) view.findViewById(R.id.tv_clock);
     tvQuestionTrue = (TextView) view.findViewById(R.id.tv_question_true);
     tvQuestionAnswered = (TextView) view.findViewById(R.id.tv_question_answered);
     tvQuestionSum = (TextView) view.findViewById(R.id.tv_question_sum);
     tvConten = (TextView) view.findViewById(R.id.tv_content);
     tvDisplay = (TextView) view.findViewById(R.id.tv_display);
+    
     btnOne = (Button) view.findViewById(R.id.btn_one);
     btnTwo = (Button) view.findViewById(R.id.btn_two);
     btnThree = (Button) view.findViewById(R.id.btn_three);
@@ -60,6 +63,8 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   
   private void initial() {
     listQuestionEntities = (QuestionEntityManager) getArguments().getSerializable(KEY_LIST_QUESTION);
+    
+    
     
   }
   

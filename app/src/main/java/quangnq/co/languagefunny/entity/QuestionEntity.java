@@ -91,4 +91,8 @@ public class QuestionEntity extends BaseEntity {
         
         }
     }
+    
+    public String createString () {
+        return this.getId() + "_" + this.content + "_" + this.answer + "_" + this.display + "_" + this.isDifficult + "_" + this.isSave + "_" + this.numberAgain;
+    }
 }
