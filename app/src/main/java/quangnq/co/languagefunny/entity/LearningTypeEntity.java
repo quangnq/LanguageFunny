@@ -5,11 +5,22 @@ package quangnq.co.languagefunny.entity;
  */
 
 public class LearningTypeEntity extends BaseEntity {
+  private LanguageEntity languageEntity;
+  
   public LearningTypeEntity() {
     super();
   }
   
-  public LearningTypeEntity(String id) {
-    super(id);
+  public LearningTypeEntity(String id, String path, LanguageEntity languageEntity) {
+    super(id, path);
+    this.languageEntity = languageEntity;
+  }
+  
+  public LanguageEntity getLanguageEntity() {
+    return languageEntity;
+  }
+  
+  public void setLanguageEntity(LanguageEntity languageEntity) {
+    this.languageEntity = languageEntity;
   }
 }

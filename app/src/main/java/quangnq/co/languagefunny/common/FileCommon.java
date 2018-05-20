@@ -84,6 +84,9 @@ public class FileCommon {
       reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
       while ((line = reader.readLine()) != null) {
         if (!"".equals(line.trim())) {
+          if (line.startsWith("\uFEFF")) {
+            line = line.substring(1);
+          }
           list.add(line.trim());
         }
       }
@@ -121,5 +124,50 @@ public class FileCommon {
         e.printStackTrace();
       }
     }
+  }
+  
+  //write file sdcard
+  public static void writeFile(String path, String data, boolean append) {
+    File file = new File(path);
+    if (!checkFileEmpty(file)) {
+      data = "\n" + data;
+    }
+    FileOutputStream fos = null;
+    try {
+      fos = new FileOutputStream(file, append);
+      fos.write(data.getBytes());
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (fos != null)
+          fos.close();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  
+  public static boolean checkFileEmpty(File file) {
+    BufferedReader reader = null;
+    try {
+      String line = "";
+      reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
+      while ((line = reader.readLine()) != null) {
+        if (!"".equals(line.trim()) && line.length() > 1) {
+          return false;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (reader != null)
+          reader.close();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    return true;
   }
 }

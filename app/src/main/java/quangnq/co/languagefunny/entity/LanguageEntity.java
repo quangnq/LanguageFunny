@@ -5,12 +5,14 @@ package quangnq.co.languagefunny.entity;
  */
 
 public class LanguageEntity extends BaseEntity {
+  
+  
   public LanguageEntity() {
     super();
   }
   
-  public LanguageEntity(String id) {
-    super(id);
+  public LanguageEntity(String id, String path) {
+    super(id, path);
   }
 
 }

@@ -9,14 +9,15 @@ import java.io.Serializable;
 public class LessonEntity extends BaseEntity implements Serializable {
   private boolean isChecked;
   
-  private String path;
+  private LearningTypeEntity learningTypeEntity;
   
   public LessonEntity() {
     super();
   }
   
-  public LessonEntity(String id) {
-    super(id);
+  public LessonEntity(String id, String path, LearningTypeEntity learningTypeEntity) {
+    super(id, path);
+    this.learningTypeEntity = learningTypeEntity;
   }
   
   public boolean isChecked() {
@@ -27,11 +28,11 @@ public class LessonEntity extends BaseEntity implements Serializable {
     isChecked = checked;
   }
   
-  public String getPath() {
-    return path;
+  public LearningTypeEntity getLearningTypeEntity() {
+    return learningTypeEntity;
   }
   
-  public void setPath(String path) {
-    this.path = path;
+  public void setLearningTypeEntity(LearningTypeEntity learningTypeEntity) {
+    this.learningTypeEntity = learningTypeEntity;
   }
 }

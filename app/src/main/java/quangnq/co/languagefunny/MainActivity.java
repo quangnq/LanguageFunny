@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 
+import quangnq.co.languagefunny.fragment.BaseFragment;
 import quangnq.co.languagefunny.fragment.LanguageFragment;
 
 public class MainActivity extends Activity {
-  
+  BaseFragment backFragment;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -22,5 +23,18 @@ public class MainActivity extends Activity {
         beginTransaction()
         .replace(R.id.fragment_switch, fragment)
         .commit();
+  }
+  
+  public void setBackFragment(BaseFragment baseFragment) {
+    backFragment = baseFragment;
+  }
+  
+  @Override
+  public void onBackPressed() {
+    if (backFragment == null) {
+      finishAndRemoveTask();
+      return;
+    }
+    onAttachFragment(backFragment);
   }
 }

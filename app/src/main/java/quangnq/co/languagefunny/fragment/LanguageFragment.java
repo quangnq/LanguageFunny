@@ -25,6 +25,7 @@ public class LanguageFragment extends BaseFragment<LanguageEntity> implements Ba
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setBackFragment(null);
   }
   
   @Override
@@ -45,14 +46,14 @@ public class LanguageFragment extends BaseFragment<LanguageEntity> implements Ba
   
   @Override
   public void onItemShortClick(LanguageEntity entity) {
-    String path = PATH_LANGUAGE_FUNNY + "/" + entity.getId();
-    if (FileCommon.getListFolderName(path).isEmpty()) {
+    if (FileCommon.getListFolderName(entity.getPath()).isEmpty()) {
       Toast.makeText(getActivity(),entity.getId() + " is empty",Toast.LENGTH_SHORT).show();
       return;
     }
+    setBackFragment(new LanguageFragment());
+    
     Bundle bundle = new Bundle();
-    bundle.putString(KEY_PATH, path);
-    bundle.putString(KEY_PARENT, entity.getId());
+    bundle.putSerializable(KEY_ENTITY, entity);
     forward(new LearningTypeFragment(), bundle);
   }
   
@@ -60,7 +61,7 @@ public class LanguageFragment extends BaseFragment<LanguageEntity> implements Ba
     ArrayList<LanguageEntity> list = new ArrayList<>();
     LanguageEntity entity;
     for (String id : listId) {
-      entity = new LanguageEntity(id);
+      entity = new LanguageEntity(id, PATH_LANGUAGE_FUNNY + "/" + id);
       list.add(entity);
     }
     return list;

@@ -8,12 +8,13 @@ import java.util.Map;
  */
 
 public interface JICommon {
-  String KEY_PATH = "path";
-  String KEY_PARENT = "parent";
+  String KEY_ENTITY = "entity";
+  String KEY_ISAPPEND = "isAppend";
+  String KEY_STRING_LESSON_SELECTEDS = "lessonSelecteds";
+  String KEY_LIST_QUESTION = "list_question_entity";
   
   String PATH_LANGUAGE_FUNNY = "/sdcard/LanguageFunny";
-  
-  String KEY_LIST_QUESTION = "list_question_entity";
+  String FILE_LESSON_LEARNED = "/0/learned.txt";
   
   /* japanese */
 //  String[] ARRAY_JAPANESE_LEARNING_TYPE = {"vocabulary", "kanji", "listening"};
@@ -33,4 +34,10 @@ public interface JICommon {
   
   int MAX_NUMBER_AGAIN = 6;
   int MIN_NUMBER_AGAIN = 1;
+  
+  int LENGTH_ID_QUESTION = 7;
+  int LENGTH_ID_KANJI_SAMPLE_QUESTION = 10;
+  
+  String CONFIRM_BUTTON = "Confirm";
+  String NEXT_BUTTON = "Next";
 }

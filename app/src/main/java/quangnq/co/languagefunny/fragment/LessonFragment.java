@@ -1,9 +1,9 @@
 package quangnq.co.languagefunny.fragment;
 
-import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.adapter.LessonAdapter;
 import quangnq.co.languagefunny.common.FileCommon;
+import quangnq.co.languagefunny.entity.LanguageEntity;
+import quangnq.co.languagefunny.entity.LearningTypeEntity;
 import quangnq.co.languagefunny.entity.LessonEntity;
-import quangnq.co.languagefunny.entity.QuestionEntity;
 import quangnq.co.languagefunny.entity.QuestionEntityManager;
 
 /**
@@ -27,17 +27,32 @@ import quangnq.co.languagefunny.entity.QuestionEntityManager;
  */
 
 public class LessonFragment extends BaseFragment<LessonEntity> implements LessonAdapter.OnItemAction {
-  ArrayList<LessonEntity> listEntity = new ArrayList<>();
+  ArrayList<LessonEntity> lessonEntities = new ArrayList<>();
+  LearningTypeEntity learningTypeEntity;
+  TextView tvLessonLearned;
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Bundle bundle = new Bundle();
+    bundle.putSerializable(KEY_ENTITY, learningTypeEntity.getLanguageEntity());
+    LearningTypeFragment learningTypeFragment = new LearningTypeFragment();
+    learningTypeFragment.setArguments(bundle);
+    setBackFragment(learningTypeFragment);
   }
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_lesson, container, false);
     TextView title = view.findViewById(R.id.screen_title);
-    title.setText(parent + " " + title.getText());
+    title.setText(learningTypeEntity.getId() + " " + title.getText());
+    tvLessonLearned = view.findViewById(R.id.tv_lesson_learned);
+    ArrayList<String> listLessonLearned = FileCommon.readFile(learningTypeEntity.getPath() + FILE_LESSON_LEARNED);
+    String lessonLearned = "";
+    for (String s : listLessonLearned) {
+      lessonLearned = lessonLearned + s + "\n";
+    }
+    lessonLearned = tvLessonLearned.getText().toString() + lessonLearned;
+    tvLessonLearned.setText(lessonLearned);
     return view;
   }
   
@@ -48,47 +63,92 @@ public class LessonFragment extends BaseFragment<LessonEntity> implements Lesson
     Button btnEnter = (Button) view.findViewById(R.id.btn_enter);
     
     LessonAdapter adapter;
-    if (path.contains("/Listen")) {
-      adapter = new LessonAdapter(getActivity(), createListEntity(FileCommon.getListFolderName(path)));
+    if (learningTypeEntity.getPath().contains("/Listen")) {
+      adapter = new LessonAdapter(getActivity(), createListEntity(FileCommon.getListFolderName(learningTypeEntity.getPath())));
     } else {
-      adapter = new LessonAdapter(getActivity(), createListEntity(FileCommon.getListFileName(path)));
+      adapter = new LessonAdapter(getActivity(), createListEntity(FileCommon.getListFileName(learningTypeEntity.getPath())));
     }
     listView.setAdapter(adapter);
     adapter.setOnListViewAction(this);
-  
-    btnEnter.setOnClickListener(new View.OnClickListener(){
+    
+    btnEnter.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        QuestionEntityManager list = new QuestionEntityManager();
-        
-        Toast.makeText(getActivity(), list.createEntityListFromLessons(listEntity), Toast.LENGTH_SHORT).show();
-        if (list.isEmpty()) {
-          return;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_LIST_QUESTION, list);
-        forward(new QuestionFragment(), bundle);
+        showDialog("Confirm", "You want to delete lesson saved???");
       }
     });
   }
   
+  @Override
+  protected void getParentEntity() {
+    learningTypeEntity = (LearningTypeEntity) getArguments().getSerializable(KEY_ENTITY);
+  }
+  
   public void onItemShortClick(LessonEntity entity, boolean isChecked) {
-    for (int i = 0; i < listEntity.size(); i++) {
-      if (entity.getId().equals(listEntity.get(i).getId())) {
-        listEntity.get(i).setChecked(isChecked);
+    for (int i = 0; i < lessonEntities.size(); i++) {
+      if (entity.getId().equals(lessonEntities.get(i).getId())) {
+        lessonEntities.get(i).setChecked(isChecked);
         return;
       }
     }
   }
   
+  private void showDialog(String title, String content) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setTitle(title);
+    builder.setMessage(content);
+    builder.setCancelable(false);
+    builder.setPositiveButton("Append", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        forward(true);
+      }
+    });
+    builder.setNegativeButton("Not Append", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        forward(false);
+      }
+    });
+    AlertDialog alertDialog = builder.create();
+    alertDialog.show();
+  }
+  
+  private void forward(boolean isAppend) {
+    QuestionEntityManager list = new QuestionEntityManager();
+    
+    Toast.makeText(getActivity(), list.createEntityListFromLessons(lessonEntities), Toast.LENGTH_SHORT).show();
+    if (list.isEmpty()) {
+      return;
+    }
+    
+    String lessonSelected = "";
+    for (LessonEntity entity : lessonEntities) {
+      if (entity.isChecked()) {
+        lessonSelected = lessonSelected + entity.getId() + ",";
+      }
+    }
+    
+    
+    Bundle bundle = new Bundle();
+    bundle.putSerializable(KEY_LIST_QUESTION, list);
+    bundle.putBoolean(KEY_ISAPPEND, isAppend);
+    bundle.putString(KEY_STRING_LESSON_SELECTEDS, lessonSelected);
+    
+    if (lessonEntities.get(0).getPath().contains("/Kanji/")) {
+      forward(new KanjiQuestionFragment(), bundle);
+    } else if (lessonEntities.get(0).getPath().contains("/Vocabulary/")) {
+      forward(new VocabularyQuestionFragment(), bundle);
+    }
+  }
+  
   private ArrayList<LessonEntity> createListEntity(ArrayList<String> list) {
     LessonEntity entity;
-    for (String item : list) {
-      entity = new LessonEntity(item);
-      entity.setPath(path + "/" + entity.getId());
-      listEntity.add(entity);
+    for (String id : list) {
+      entity = new LessonEntity(id, learningTypeEntity.getPath() + "/" + id, learningTypeEntity);
+      lessonEntities.add(entity);
     }
-    return listEntity;
+    return lessonEntities;
   }
   
 }
