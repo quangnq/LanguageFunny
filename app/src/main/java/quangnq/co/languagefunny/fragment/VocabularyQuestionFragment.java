@@ -19,9 +19,11 @@ public class VocabularyQuestionFragment extends QuestionFragment {
     @Override
     void executeButtonChange() {
         String temp = currentQuestionEntity.getContent();
-        currentQuestionEntity.setContent(currentQuestionEntity.getDisplay());
-        currentQuestionEntity.setDisplay(temp);
+        currentQuestionEntity.setContent(currentQuestionEntity.getAnswer());
+        currentQuestionEntity.setAnswer(temp);
         currentQuestionEntity.updateToFile();
+        tvConten.setText(currentQuestionEntity.getContent());
+        tvQuestionAnswered.setText(currentQuestionEntity.getAnswer());
     }
     
     @Override

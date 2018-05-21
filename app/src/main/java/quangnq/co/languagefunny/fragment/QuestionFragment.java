@@ -117,6 +117,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     btnThree.setEnabled(false);
     btnFour.setEnabled(false);
     
+    btnChangeLevel.setEnabled(true);
     btnConirmNext.setText(NEXT_BUTTON);
     tvDisplay.setText(currentQuestionEntity.getDisplay()
         + "_" + currentQuestionEntity.getId());
@@ -179,6 +180,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     btnTwo.setEnabled(true);
     btnThree.setEnabled(true);
     btnFour.setEnabled(true);
+    btnChangeLevel.setEnabled(false);
     
     btnAdd.setEnabled(false);
   }
