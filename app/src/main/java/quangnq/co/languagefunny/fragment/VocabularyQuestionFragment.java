@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import quangnq.co.languagefunny.entity.Choice;
-import quangnq.co.languagefunny.entity.KanjiQuestionEntity;
 import quangnq.co.languagefunny.entity.QuestionEntity;
-import quangnq.co.languagefunny.entity.QuestionEntityManager;
 
 /**
  * Created by quang on 5/19/2018.
@@ -29,6 +27,14 @@ public class VocabularyQuestionFragment extends QuestionFragment {
     @Override
     void initial() {
         super.initial();
+        
+        for (QuestionEntity entity : questionEntityManager) {
+            if (entity.getNumberAgain() <= MIN_NUMBER_AGAIN && entity.getIsSave() == NOT_SAVE) {
+                entity.setIsSave(SAVE);
+                entity.updateToFile();
+            }
+        }
+        
         Collections.shuffle(questionEntityManager);
         display();
     }

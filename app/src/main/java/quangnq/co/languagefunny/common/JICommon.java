@@ -1,8 +1,5 @@
 package quangnq.co.languagefunny.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by quang on 4/20/2018.
  */
@@ -11,7 +8,7 @@ public interface JICommon {
   String KEY_ENTITY = "entity";
   String KEY_ISAPPEND = "isAppend";
   String KEY_STRING_LESSON_SELECTEDS = "lessonSelecteds";
-  String KEY_LIST_QUESTION = "list_question_entity";
+  String KEY_LIST_LESSON_SELECTED = "list_lesson_selected";
   
   String PATH_LANGUAGE_FUNNY = "/sdcard/LanguageFunny";
   String FILE_LESSON_LEARNED = "/0/learned.txt";

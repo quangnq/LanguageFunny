@@ -10,24 +10,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.adapter.LessonAdapter;
 import quangnq.co.languagefunny.common.FileCommon;
-import quangnq.co.languagefunny.entity.LanguageEntity;
 import quangnq.co.languagefunny.entity.LearningTypeEntity;
 import quangnq.co.languagefunny.entity.LessonEntity;
-import quangnq.co.languagefunny.entity.QuestionEntityManager;
+import quangnq.co.languagefunny.entity.LessonEntityManager;
 
 /**
  * Created by quang on 03/03/2018.
  */
 
 public class LessonFragment extends BaseFragment<LessonEntity> implements LessonAdapter.OnItemAction {
-  ArrayList<LessonEntity> lessonEntities = new ArrayList<>();
+  LessonEntityManager lessonEntities = new LessonEntityManager();
   LearningTypeEntity learningTypeEntity;
   TextView tvLessonLearned;
   @Override
@@ -115,12 +113,6 @@ public class LessonFragment extends BaseFragment<LessonEntity> implements Lesson
   }
   
   private void forward(boolean isAppend) {
-    QuestionEntityManager list = new QuestionEntityManager();
-    
-    Toast.makeText(getActivity(), list.createEntityListFromLessons(lessonEntities), Toast.LENGTH_SHORT).show();
-    if (list.isEmpty()) {
-      return;
-    }
     
     String lessonSelected = "";
     for (LessonEntity entity : lessonEntities) {
@@ -131,7 +123,7 @@ public class LessonFragment extends BaseFragment<LessonEntity> implements Lesson
     
     
     Bundle bundle = new Bundle();
-    bundle.putSerializable(KEY_LIST_QUESTION, list);
+    bundle.putSerializable(KEY_LIST_LESSON_SELECTED, lessonEntities);
     bundle.putBoolean(KEY_ISAPPEND, isAppend);
     bundle.putString(KEY_STRING_LESSON_SELECTEDS, lessonSelected);
     

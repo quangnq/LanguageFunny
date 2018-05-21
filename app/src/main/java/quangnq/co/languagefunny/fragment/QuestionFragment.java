@@ -18,8 +18,7 @@ import java.util.Collections;
 import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.entity.Choice;
-import quangnq.co.languagefunny.entity.KanjiQuestionEntity;
-import quangnq.co.languagefunny.entity.LessonEntity;
+import quangnq.co.languagefunny.entity.LessonEntityManager;
 import quangnq.co.languagefunny.entity.QuestionEntity;
 import quangnq.co.languagefunny.entity.QuestionEntityManager;
 
@@ -31,7 +30,6 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   
   Button btnChangeLevel, btnAdd, btnConirmNext, btnOne, btnTwo, btnThree, btnFour;
   TextView tvClock, tvQuestionTrue, tvQuestionAnswered, tvQuestionSum, tvConten, tvDisplay;
-  EditText edtContent, edtDisplay, edtAnswer;
   ArrayList<Choice> listChoice = new ArrayList<>();
   
   QuestionEntityManager questionEntityManager = new QuestionEntityManager();
@@ -96,7 +94,8 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   
   void initial() {
     questionEntityManager.clear();
-    questionEntityManager.addAll((QuestionEntityManager) getArguments().getSerializable(KEY_LIST_QUESTION));
+    Toast.makeText(getActivity(), questionEntityManager.createEntityListFromLessons((LessonEntityManager) getArguments().getSerializable(KEY_LIST_LESSON_SELECTED))
+        , Toast.LENGTH_SHORT).show();
     index = 0;
   }
   

@@ -12,7 +12,7 @@ import quangnq.co.languagefunny.common.JICommon;
 
 public class QuestionEntityManager extends ArrayList<QuestionEntity> implements JICommon, Serializable {
   
-  public String createEntityListFromLessons(ArrayList<LessonEntity> lessonEntities) {
+  public String createEntityListFromLessons(LessonEntityManager lessonEntities) {
     ArrayList<String> list;
     String[] arrs;
     QuestionEntity questionEntity;

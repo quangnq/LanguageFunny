@@ -1,20 +1,14 @@
 package quangnq.co.languagefunny.fragment;
 
-import android.content.DialogInterface;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.entity.Choice;
 import quangnq.co.languagefunny.entity.KanjiQuestionEntity;
 import quangnq.co.languagefunny.entity.KanjiQuestionEntityManager;
 import quangnq.co.languagefunny.entity.KanjiSampleQuestionEntity;
-import quangnq.co.languagefunny.entity.QuestionEntity;
 
 /**
  * Created by quang on 5/19/2018.

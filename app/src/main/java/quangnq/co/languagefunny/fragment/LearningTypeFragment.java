@@ -2,7 +2,6 @@ package quangnq.co.languagefunny.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.adapter.BaseAdapter;
 import quangnq.co.languagefunny.adapter.LearningTypeAdapter;
 import quangnq.co.languagefunny.common.FileCommon;
-import quangnq.co.languagefunny.entity.BaseEntity;
 import quangnq.co.languagefunny.entity.LanguageEntity;
 import quangnq.co.languagefunny.entity.LearningTypeEntity;
-import quangnq.co.languagefunny.entity.QuestionEntity;
 
 /**
  * Created by quang on 03/03/2018.

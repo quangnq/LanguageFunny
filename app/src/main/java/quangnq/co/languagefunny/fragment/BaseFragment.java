@@ -4,10 +4,7 @@ package quangnq.co.languagefunny.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.View;
-
-import java.util.ArrayList;
 
 import quangnq.co.languagefunny.MainActivity;
 import quangnq.co.languagefunny.common.JICommon;

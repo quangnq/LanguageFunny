@@ -79,8 +79,7 @@ public class FileCommon {
     BufferedReader reader = null;
     ArrayList<String> list = new ArrayList<>();
     try {
-      String line = "";
-      String[] arrs;
+      String line;
       reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
       while ((line = reader.readLine()) != null) {
         if (!"".equals(line.trim())) {
