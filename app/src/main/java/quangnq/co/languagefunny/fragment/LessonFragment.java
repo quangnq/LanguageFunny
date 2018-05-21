@@ -137,7 +137,9 @@ public class LessonFragment extends BaseFragment<LessonEntity> implements Lesson
     
     if (lessonEntities.get(0).getPath().contains("/Kanji/")) {
       forward(new KanjiQuestionFragment(), bundle);
-    } else if (lessonEntities.get(0).getPath().contains("/Vocabulary/")) {
+    } else if (lessonEntities.get(0).getPath().contains("/Listen/")) {
+    
+    } else {
       forward(new VocabularyQuestionFragment(), bundle);
     }
   }
