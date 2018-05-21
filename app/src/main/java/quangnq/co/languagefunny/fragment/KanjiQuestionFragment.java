@@ -70,12 +70,6 @@ public class KanjiQuestionFragment extends QuestionFragment {
   }
   
   @Override
-  void executeButtonNext() {
-    indexKanjiSample++;
-    displayKanjiSample();
-  }
-  
-  @Override
   void executeSelected(boolean isChoosed) {
     if (isKanjiSampleQuestion) {
       if (!isChoosed) {
@@ -83,12 +77,22 @@ public class KanjiQuestionFragment extends QuestionFragment {
       }
       return;
     }
-    if (!isChoosed) {
-      kanjiQuestionEntityManager.add((KanjiQuestionEntity) currentQuestionEntity);
-      tvQuestionSum.setText(Integer.toString(kanjiQuestionEntityManager.size()));
-      listKanjiSample.clear();
-    }
     super.executeSelected(isChoosed);
+  }
+  
+  @Override
+  void addQuestion() {
+    
+    kanjiQuestionEntityManager.add((KanjiQuestionEntity) currentQuestionEntity);
+    tvQuestionSum.setText(Integer.toString(kanjiQuestionEntityManager.size()));
+    listKanjiSample.clear();
+    
+    if (currentQuestionEntity.getNumberAgain() != MAX_NUMBER_AGAIN) {
+      currentQuestionEntity.setNumberAgain(MAX_NUMBER_AGAIN);
+      currentQuestionEntity.setIsSave(SAVE);
+      currentQuestionEntity.updateToFile();
+    }
+    Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
   }
   
   @Override
@@ -124,8 +128,18 @@ public class KanjiQuestionFragment extends QuestionFragment {
         break;
       }
     }
-    
     tvQuestionSum.setText(Integer.toString(kanjiQuestionEntityManager.size()));
     setDisplayControllBeforeSelect();
+  }
+  
+  @Override
+  void executeButtonNext() {
+    indexKanjiSample++;
+    displayKanjiSample();
+  }
+  
+  @Override
+  void executeButtonAdd() {
+  
   }
 }

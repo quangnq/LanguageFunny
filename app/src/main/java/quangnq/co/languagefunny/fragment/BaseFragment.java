@@ -60,4 +60,8 @@ public class BaseFragment<E extends BaseEntity> extends Fragment implements JICo
   void setBackFragment(BaseFragment fragment){
     getMainActivity().setBackFragment(fragment);
   }
+  
+  BaseFragment getBackFragment() {
+    return getMainActivity().getBackFragment();
+  }
 }

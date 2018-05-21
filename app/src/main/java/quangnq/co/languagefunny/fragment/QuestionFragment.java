@@ -100,18 +100,10 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     index = 0;
   }
   
-  void handleBackButton() {
-    Bundle bundle = new Bundle();
-    bundle.putSerializable(KEY_ENTITY, currentQuestionEntity.getLessonEntity().getLearningTypeEntity());
-    forward(new LessonFragment(), bundle);
-  }
-  
   void display (){
-  
   }
   
   void setDisplayControllAfterSelected () {
-    btnConirmNext.setText(NEXT_BUTTON);
     if (listChoice.get(0).isTrue)
       btnOne.setBackgroundResource(R.drawable.bcg_bt_qs_true);
     if (listChoice.get(1).isTrue)
@@ -124,7 +116,8 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     btnTwo.setEnabled(false);
     btnThree.setEnabled(false);
     btnFour.setEnabled(false);
-  
+    
+    btnConirmNext.setText(NEXT_BUTTON);
     tvDisplay.setText(currentQuestionEntity.getDisplay()
         + "_" + currentQuestionEntity.getId());
   }
@@ -148,19 +141,23 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
       } else {
         currentQuestionEntity.setNumberAgain(MIN_NUMBER_AGAIN);
       }
+      Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
       currentQuestionEntity.setIsSave(NOT_SAVE);
       currentQuestionEntity.updateToFile();
+      int temp = Integer.parseInt(tvQuestionTrue.getText().toString());
+      temp++;
+      tvQuestionTrue.setText(Integer.toString(temp));
+      btnAdd.setEnabled(true);
     } else {
-      if (currentQuestionEntity.getNumberAgain() != MAX_NUMBER_AGAIN) {
-        currentQuestionEntity.setNumberAgain(MAX_NUMBER_AGAIN);
-        currentQuestionEntity.setIsSave(SAVE);
-        currentQuestionEntity.updateToFile();
-      }
+      addQuestion();
     }
     int answered = Integer.parseInt(tvQuestionAnswered.getText().toString());
     answered++;
     tvQuestionAnswered.setText(Integer.toString(answered));
-    Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
+  }
+  
+  void addQuestion() {
+  
   }
   
   void setDisplayControllBeforeSelect () {
@@ -168,8 +165,6 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
       listChoice.add(new Choice("choice sample", false));
     }
     Collections.shuffle(listChoice);
-    
-    btnConirmNext.setText(CONFIRM_BUTTON);
     tvDisplay.setText("");
     
     btnOne.setBackgroundResource(R.drawable.bcg_bt_qs);
@@ -200,7 +195,6 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
       }
     }
     
-    
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
     builder.setTitle(title);
     builder.setMessage(content);
@@ -215,7 +209,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialogInterface, int i) {
-        getActivity().finish();
+        forward(getBackFragment());
       }
     });
     AlertDialog alertDialog = builder.create();
@@ -252,7 +246,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
             currentQuestionEntity.updateToFile();
             Toast.makeText(getActivity(), "Update Success", Toast.LENGTH_SHORT).show();
             tvConten.setText(currentQuestionEntity.getContent());
-            if (!"".equals(tvDisplay)) {
+            if (!"".equals(tvDisplay.getText())) {
               tvDisplay.setText(currentQuestionEntity.getDisplay());
             }
             
@@ -277,15 +271,20 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   public void onClick(View v) {
     switch (v.getId()) {
       case R.id.btn_add:
+        addQuestion();
+        btnAdd.setEnabled(false);
         break;
       case R.id.btn_change_level:
+        executeButtonChange();
         break;
       case R.id.btn_conirm_next:
         if (btnConirmNext.getText().equals(NEXT_BUTTON)) {
           executeButtonNext();
+          btnConirmNext.setText(CONFIRM_BUTTON);
         } else {
           setDisplayControllAfterSelected();
           executeSelected(false);
+          
         }
         break;
       case R.id.btn_one:
@@ -309,6 +308,14 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
         }
         break;
     }
+  }
+  
+  void executeButtonChange() {
+  
+  }
+  
+  void executeButtonAdd() {
+  
   }
   
 }

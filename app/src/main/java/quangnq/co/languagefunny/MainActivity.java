@@ -14,6 +14,7 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     onAttachFragment(new LanguageFragment());
+    
   }
   
   @Override
@@ -27,6 +28,10 @@ public class MainActivity extends Activity {
   
   public void setBackFragment(BaseFragment baseFragment) {
     backFragment = baseFragment;
+  }
+  
+  public BaseFragment getBackFragment() {
+    return backFragment;
   }
   
   @Override
