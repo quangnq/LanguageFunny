@@ -1,208 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="#36ba5f"
-        android:orientation="horizontal"
-        android:weightSum="7">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="65dp"
-            android:layout_weight="1"
-            android:gravity="start|center">
-
-            <Button
-                android:id="@+id/btn_change_level"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_margin="3dp"
-                android:background="@drawable/bcg_ic_easy" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="65dp"
-            android:layout_weight="5"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_clock"
-                android:layout_width="match_parent"
-                android:layout_height="33dp"
-                android:gravity="center"
-                android:text="09:59"
-                android:textColor="#ffffff"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:typeface="serif" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:background="#FAFAFA" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:id="@+id/tv_question_true"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="right|center"
-                    android:text="00"
-                    android:textColor="#ffffff"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
-
-                <TextView
-                    android:id="@+id/tv_question_answered"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.02"
-                    android:gravity="center"
-                    android:text="00"
-                    android:textColor="#ffffff"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
-
-                <TextView
-                    android:id="@+id/tv_question_sum"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="left|center"
-                    android:text="00"
-                    android:textColor="#ffffff"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="65dp"
-            android:layout_weight="1"
-            android:gravity="right|center">
-
-            <Button
-                android:id="@+id/btn_add"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bcg_ic_add"
-                android:gravity="center" />
-        </LinearLayout>
-    </LinearLayout>
+    android:layout_width="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/bcg_tv"
-            android:padding="3dp"
-            android:textColor="#020202"
-            android:textSize="24sp"
-            android:text="音"
-            android:typeface="serif" />
-
-        <TextView
-            android:id="@+id/tv_display"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/bcg_tv"
-            android:padding="3dp"
-            android:textColor="#020202"
-            android:textSize="20dp"
-            android:typeface="serif" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="65dp"
+            android:background="#36ba5f"
+            android:orientation="horizontal"
+            android:weightSum="7">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:layout_weight="1"
+                android:gravity="start|center">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border_set"
-                    android:textColor="#020202"
-                    android:textSize="20dp"
-                    android:text="On" />
-
+                <Button
+                    android:id="@+id/btn_change_level"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bcg_ic_easy" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_buton_on"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:layout_weight="5"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_clock"
+                    android:layout_width="match_parent"
+                    android:layout_height="33dp"
+                    android:gravity="center"
+                    android:text="09:59"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:background="#FAFAFA" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/tv_question_true"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
+                        android:text="00"
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/tv_question_answered"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.02"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/tv_question_sum"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center"
+                        android:text="00"
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:layout_weight="1"
+                android:gravity="right|center">
+
+                <Button
+                    android:id="@+id/btn_add"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/bcg_ic_add"
+                    android:gravity="center" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/bcg_tv"
+                android:padding="3dp"
+                android:text="音"
+                android:textColor="#020202"
+                android:textSize="24sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/tv_display"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/bcg_tv"
+                android:padding="3dp"
+                android:textColor="#020202"
+                android:textSize="20dp"
+                android:typeface="serif" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border_set"
-                    android:textColor="#020202"
-                    android:textSize="20dp"
-                    android:text="Kun" />
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border_set"
+                        android:text="On"
+                        android:textColor="#020202"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_buton_on"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"></LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_buton_kun"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border_set"
+                        android:text="Kun"
+                        android:textColor="#020202"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_buton_kun"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"></LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+</ScrollView>
