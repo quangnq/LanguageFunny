@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +13,29 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Space;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import quangnq.co.languagefunny.R;
+import quangnq.co.languagefunny.entity.Choice;
+import quangnq.co.languagefunny.entity.KanjiQuestionEntity;
+import quangnq.co.languagefunny.entity.KanjiQuestionEntityManager;
+import quangnq.co.languagefunny.entity.QuestionEntity;
+import quangnq.co.languagefunny.entity.QuestionEntityManager;
 
 public class DemoFragment extends BaseFragment implements View.OnClickListener {
-    Button[] kunButtons = new Button[9];
-    Button[] onButtons = new Button[9];
+    
+    Button btnChangeLevel, btnAdd, btnConirmNext;
+    TextView tvClock, tvQuestionTrue, tvQuestionAnswered, tvQuestionSum, tvConten, tvDisplay;
+    
+    KanjiQuestionEntityManager kanjiQuestionEntityManager = new KanjiQuestionEntityManager();
+    KanjiQuestionEntity currentQuestionEntity;
+    int index;
+    
+    Button[] kunButtons = new Button[6];
+    Button[] onButtons = new Button[6];
     LinearLayout layoutButtonKun;
     LinearLayout layoutButtonOn;
     String[] kunStrings = {"demo 167899065663443", "demo 12", "demo 12367", "demo 1234", "demo 12345", "demo 123456", "demo 123456", "demo 123456", "demo 123456"};
@@ -61,21 +74,28 @@ public class DemoFragment extends BaseFragment implements View.OnClickListener {
 
     void initialButton(LinearLayout layoutButtons,final Button[] buttons, String[] buttonTexts) {
         for (int i = 0; i < buttons.length; i++) {
-            Button btn = new Button(getMainActivity());
-            btn.setId(i);
-            btn.setText(buttonTexts[i]);
-            btn.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-            btn.setTextColor(Color.WHITE);
-            btn.setTextSize(14);
-            btn.setBackgroundResource(R.drawable.custom_button_answer);
-            btn.setTypeface(null, Typeface.BOLD);
-            buttons[i] = btn;
+            buttons[i] = new Button(getMainActivity());
+            buttons[i].setId(i);
+            buttons[i].setText(buttonTexts[i]);
+            buttons[i].setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            buttons[i].setTextColor(Color.WHITE);
+            buttons[i].setTextSize(14);
+            buttons[i].setBackgroundResource(R.drawable.custom_button_default);
+            buttons[i].setTypeface(null, Typeface.BOLD);
             layoutButtons.addView(buttons[i]);
+            buttons[i].setActivated(false);
+            
             final int j = i;
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getMainActivity(), buttons[j].getText(), Toast.LENGTH_SHORT).show();
+                    if (buttons[j].isActivated()) {
+                        buttons[j].setActivated(false);
+                        buttons[j].setBackgroundResource(R.drawable.custom_button_default);
+                    } else {
+                        buttons[j].setActivated(true);
+                        buttons[j].setBackgroundResource(R.drawable.custom_button_seleted);
+                    }
                 }
             });
         }

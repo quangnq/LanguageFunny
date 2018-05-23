@@ -10,11 +10,22 @@ import quangnq.co.languagefunny.common.JICommon;
 
 public class KanjiQuestionEntity extends QuestionEntity implements JICommon {
   
-  ArrayList<KanjiSampleQuestionEntity> listSample = new ArrayList<>();
+  private ArrayList<String> listKunyomi = new ArrayList<>();
+  private ArrayList<String> listOnyomi = new ArrayList<>();
+  
+  private ArrayList<KanjiSampleQuestionEntity> listSample = new ArrayList<>();
   
   public KanjiQuestionEntity(String id, String content, String answer, String display,
       int isDifficult, int isSave, int numberAgain, String path, LessonEntity lessonEntity) {
     super(id, content, answer, display, isDifficult, isSave, numberAgain, path, lessonEntity);
+  }
+  
+  public KanjiQuestionEntity(String id, String content, String onyomi, String kunyomi, String display,
+      int isDifficult, int isSave, int numberAgain, String path, LessonEntity lessonEntity) {
+    
+    super(id, content, "", display, isDifficult, isSave, numberAgain, path, lessonEntity);
+    createListKunyomi(kunyomi);
+    createListOnyomi(onyomi);
   }
   
   public KanjiQuestionEntity(QuestionEntity questionEntity) {
@@ -40,11 +51,47 @@ public class KanjiQuestionEntity extends QuestionEntity implements JICommon {
     }
   }
   
+  public void createListOnyomi(String onyomi) {
+    listOnyomi.clear();
+    if (onyomi == null || "".equals(onyomi)) {
+      return;
+    }
+    
+    String[] arr = onyomi.split(";");
+    for (int i = 0; i < arr.length; i++) {
+      if (!"".equals(arr[i].trim())) {
+        listOnyomi.add(arr[i].trim());
+      }
+    }
+  }
+  
+  public void createListKunyomi(String kunyomi) {
+    listKunyomi.clear();
+    if (kunyomi == null || "".equals(kunyomi)) {
+      return;
+    }
+    
+    String[] arr = kunyomi.split(";");
+    for (int i = 0; i < arr.length; i++) {
+      if (!"".equals(arr[i].trim())) {
+        listKunyomi.add(arr[i].trim());
+      }
+    }
+  }
+  
   public ArrayList<KanjiSampleQuestionEntity> getListSample() {
     return listSample;
   }
   
   public void setListSample(ArrayList<KanjiSampleQuestionEntity> listSample) {
     this.listSample = listSample;
+  }
+  
+  public ArrayList<String> getListKunyomi() {
+    return listKunyomi;
+  }
+  
+  public ArrayList<String> getListOnyomi() {
+    return listOnyomi;
   }
 }
