@@ -33,6 +33,8 @@ public interface JICommon {
   int MIN_NUMBER_AGAIN = 1;
   
   int LENGTH_ID_QUESTION = 7;
+  int LENGTH_ARR_KANJI_QUESTION = 8;
+  int LENGTH_ARR_VOCABULARY_QUESTION = 7;
   int LENGTH_ID_KANJI_SAMPLE_QUESTION = 10;
   
   String CONFIRM_BUTTON = "Confirm";

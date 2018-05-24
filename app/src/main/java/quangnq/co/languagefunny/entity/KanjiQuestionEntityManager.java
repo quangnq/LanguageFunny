@@ -13,20 +13,6 @@ import quangnq.co.languagefunny.common.JICommon;
 
 public class KanjiQuestionEntityManager extends ArrayList<KanjiQuestionEntity> implements JICommon {
   
-  public void initial(QuestionEntityManager questionEntityManager) {
-    QuestionEntityManager list;
-    for (QuestionEntity entity : questionEntityManager) {
-      KanjiQuestionEntity kanjiQuestionEntity;
-      if (entity.getId().length() == LENGTH_ID_QUESTION) {
-        kanjiQuestionEntity = new KanjiQuestionEntity(entity);
-        list = new QuestionEntityManager();
-        list.createEntityListFromLessonEntity(entity.getLessonEntity());
-        kanjiQuestionEntity.createListSample(list);
-        this.add(kanjiQuestionEntity);
-      }
-    }
-  }
-  
   public String createEntityListFromLessons(LessonEntityManager lessonEntities) {
     ArrayList<String> list;
     String[] arrs;
@@ -35,17 +21,20 @@ public class KanjiQuestionEntityManager extends ArrayList<KanjiQuestionEntity> i
       list = FileCommon.readFile(lessonEntity.getPath());
       for (String s : list) {
         arrs = s.split("_");
-        if (arrs.length != 8) {
-          return "Error " + lessonEntity.getId() + " : " + arrs[0].trim();
-        } else {
+        if (arrs.length == LENGTH_ARR_KANJI_QUESTION && arrs[0].length() == LENGTH_ID_QUESTION) {
           questionEntity = new KanjiQuestionEntity(arrs[0].trim(), arrs[1].trim(), arrs[2].trim(),
-              arrs[3].trim(), arrs[4].trim(), Integer.parseInt(arrs[5].trim()), Integer.parseInt(arrs[6].trim()),
-              Integer.parseInt(arrs[7].trim()), lessonEntity.getPath() + "/" + arrs[0].trim(), lessonEntity);
+                  arrs[3].trim(), arrs[4].trim(), Integer.parseInt(arrs[5].trim()), Integer.parseInt(arrs[6].trim()),
+                  Integer.parseInt(arrs[7].trim()), lessonEntity.getPath() + "/" + arrs[0].trim(), lessonEntity);
           if (this.isContain(questionEntity) == -1) {
             if (lessonEntity.isChecked() || questionEntity.getIsSave() == SAVE || questionEntity.getNumberAgain() > MIN_NUMBER_AGAIN) {
+              questionEntity.createListSample(list);
               this.add(questionEntity);
             }
           }
+        } else if (arrs.length == LENGTH_ARR_VOCABULARY_QUESTION && arrs[0].length() == LENGTH_ID_KANJI_SAMPLE_QUESTION) {
+
+        } else {
+          return "Error " + lessonEntity.getId() + " : " + arrs[0].trim();
         }
       }
     }
@@ -53,6 +42,50 @@ public class KanjiQuestionEntityManager extends ArrayList<KanjiQuestionEntity> i
       return "empty : please choose lesson";
     }
     return "success : execute test";
+  }
+
+  public static ArrayList<String> createListTotalKun(LessonEntityManager lessonEntities) {
+    ArrayList<String> list;
+    String[] arrs;
+    ArrayList<String> listTotalKun = new ArrayList<>();
+    for (LessonEntity lessonEntity : lessonEntities) {
+      list = FileCommon.readFile(lessonEntity.getPath());
+      for (String s : list) {
+        arrs = s.split("_");
+        if (arrs.length == LENGTH_ARR_KANJI_QUESTION && arrs[0].length() == LENGTH_ID_QUESTION) {
+          arrs = arrs[3].split(";");
+          for (int i = 0; i < arrs.length; i++) {
+            if (!"".equals(arrs[i].trim())) {
+              listTotalKun.add(arrs[i].trim());
+              Log.i("createListTotalKun: ", "createListTotalKun: " + arrs[i].trim());
+            }
+          }
+        }
+      }
+    }
+    return listTotalKun;
+  }
+
+  public static ArrayList<String> createListTotalOn(LessonEntityManager lessonEntities) {
+    ArrayList<String> list;
+    String[] arrs;
+    ArrayList<String> listTotal = new ArrayList<>();
+    for (LessonEntity lessonEntity : lessonEntities) {
+      list = FileCommon.readFile(lessonEntity.getPath());
+      for (String s : list) {
+        arrs = s.split("_");
+        if (arrs.length == LENGTH_ARR_KANJI_QUESTION && arrs[0].length() == LENGTH_ID_QUESTION) {
+          arrs = arrs[2].split(";");
+          for (int i = 0; i < arrs.length; i++) {
+            if (!"".equals(arrs[i].trim())) {
+              listTotal.add(arrs[i].trim());
+              Log.i("createListTotalOn: ", "createListTotalOn: " + arrs[i].trim());
+            }
+          }
+        }
+      }
+    }
+    return listTotal;
   }
   
   public void createEntityListFromLessonEntity(LessonEntity lessonEntity) {

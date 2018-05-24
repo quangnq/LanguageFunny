@@ -1,7 +1,9 @@
 package quangnq.co.languagefunny.entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.common.JICommon;
 
 /**
@@ -14,38 +16,26 @@ public class KanjiQuestionEntity extends QuestionEntity implements JICommon {
   private ArrayList<String> listOnyomi = new ArrayList<>();
   
   private ArrayList<KanjiSampleQuestionEntity> listSample = new ArrayList<>();
-  
-  public KanjiQuestionEntity(String id, String content, String answer, String display,
-      int isDifficult, int isSave, int numberAgain, String path, LessonEntity lessonEntity) {
-    super(id, content, answer, display, isDifficult, isSave, numberAgain, path, lessonEntity);
-  }
+
   
   public KanjiQuestionEntity(String id, String content, String onyomi, String kunyomi, String display,
       int isDifficult, int isSave, int numberAgain, String path, LessonEntity lessonEntity) {
-    
     super(id, content, "", display, isDifficult, isSave, numberAgain, path, lessonEntity);
     createListKunyomi(kunyomi);
     createListOnyomi(onyomi);
   }
-  
-  public KanjiQuestionEntity(QuestionEntity questionEntity) {
-    super(questionEntity.getId(),
-        questionEntity.getContent(),
-        questionEntity.getAnswer(),
-        questionEntity.getDisplay(),
-        questionEntity.getIsDifficult(),
-        questionEntity.getIsSave(),
-        questionEntity.getNumberAgain(),
-        questionEntity.getPath(),
-        questionEntity.getLessonEntity());
-  }
-  
-  public void createListSample(QuestionEntityManager list) {
+
+  public void createListSample(ArrayList<String> list) {
     listSample.clear();
-    for (QuestionEntity entity : list) {
-      if (entity.getId().length() == LENGTH_ID_KANJI_SAMPLE_QUESTION) {
-        if (this.getId().equals(entity.getId().substring(0, LENGTH_ID_QUESTION))) {
-          listSample.add(new KanjiSampleQuestionEntity(entity));
+    String[] arrs;
+    for (String string : list) {
+      arrs = string.split("_");
+      if (arrs[0].length() == LENGTH_ID_KANJI_SAMPLE_QUESTION) {
+        if (this.getId().equals(arrs[0].substring(0, LENGTH_ID_QUESTION))) {
+
+          listSample.add(new KanjiSampleQuestionEntity(arrs[0].trim(), arrs[1].trim(), arrs[2].trim(),
+                  arrs[3].trim(), Integer.parseInt(arrs[4].trim()), Integer.parseInt(arrs[5].trim()),
+                  Integer.parseInt(arrs[6].trim()), this.getPath() + "/" + arrs[0].trim(), this.getLessonEntity(), this.getId()));
         }
       }
     }
@@ -78,19 +68,37 @@ public class KanjiQuestionEntity extends QuestionEntity implements JICommon {
       }
     }
   }
-  
+
+  public String createString () {
+    return this.getId() + "_" + this.getContent() + "_" + createStringFromArray(this.listOnyomi)
+    + "_" + createStringFromArray(this.listKunyomi) + "_" + this.getDisplay() + "_" + this.getIsDifficult() + "_" + this.getIsSave() + "_" + this.getNumberAgain();
+  }
+
+  public String createStringFromArray(ArrayList<String> list) {
+    String total = "";
+    for (int i = 0; i < list.size(); i++ ) {
+      if (!"".equals(list.get(i).trim())) {
+        total = total + list.get(i).trim();
+        if (i < list.size() - 1) {
+          total = total + ";";
+        }
+      }
+    }
+    return total;
+  }
+
   public ArrayList<KanjiSampleQuestionEntity> getListSample() {
     return listSample;
   }
-  
+
   public void setListSample(ArrayList<KanjiSampleQuestionEntity> listSample) {
     this.listSample = listSample;
   }
-  
+
   public ArrayList<String> getListKunyomi() {
     return listKunyomi;
   }
-  
+
   public ArrayList<String> getListOnyomi() {
     return listOnyomi;
   }

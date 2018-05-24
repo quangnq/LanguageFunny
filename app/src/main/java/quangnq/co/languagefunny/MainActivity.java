@@ -5,7 +5,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import quangnq.co.languagefunny.fragment.BaseFragment;
-import quangnq.co.languagefunny.fragment.DemoFragment;
+import quangnq.co.languagefunny.fragment.KanjiQuestionFragment;
 import quangnq.co.languagefunny.fragment.LanguageFragment;
 
 public class MainActivity extends Activity {
@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    onAttachFragment(new DemoFragment());
+    onAttachFragment(new LanguageFragment());
     
   }
   

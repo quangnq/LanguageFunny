@@ -114,6 +114,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_total"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -142,6 +143,7 @@
                 android:typeface="serif" />
 
             <LinearLayout
+                android:id="@+id/kanji_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -172,12 +174,6 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical"></LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -207,6 +203,92 @@
                     android:orientation="vertical">
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/kanji_question_sample"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bcg_bt_qs"
+                    android:gravity="start|center"
+                    android:paddingLeft="15dp"
+                    android:text="Đáp án 1"
+                    android:textColor="#020202"
+                    android:textSize="19dp"
+                    android:typeface="serif" />
+
+                <Button
+                    android:id="@+id/btn_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bcg_bt_qs"
+                    android:gravity="start|center"
+                    android:paddingLeft="15dp"
+                    android:text="Đáp án 1"
+                    android:textColor="#020202"
+                    android:textSize="19dp"
+                    android:typeface="serif" />
+
+                <Button
+                    android:id="@+id/btn_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bcg_bt_qs"
+                    android:gravity="start|center"
+                    android:paddingLeft="15dp"
+                    android:text="Đáp án 1"
+                    android:textColor="#020202"
+                    android:textSize="19dp"
+                    android:typeface="serif" />
+
+                <Button
+                    android:id="@+id/btn_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bcg_bt_qs"
+                    android:gravity="start|center"
+                    android:paddingLeft="15dp"
+                    android:text="Đáp án 1"
+                    android:textColor="#020202"
+                    android:textSize="19dp"
+                    android:typeface="serif" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_conirm_next"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="55dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bcg_bt_input_edt_press"
+                android:gravity="center"
+                android:text="Confirm"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:typeface="serif" />
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
