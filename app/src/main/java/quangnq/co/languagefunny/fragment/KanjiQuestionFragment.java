@@ -310,6 +310,13 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     }
 
     boolean checkSelected(ArrayList<String> list, Button[] buttons) {
+        ArrayList<String> temp = new ArrayList<>(list);
+        int count = 0;
+        for (int i = 0; i < buttons.length; i++) {
+            if (buttons[i].isActivated()) {
+                count++;
+            }
+        }
         for (int i = 0; i < buttons.length; i++) {
             String s = buttons[i].getText().toString().trim();
             for (int j = 0; j < list.size(); j++) {
@@ -323,10 +330,10 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
             }
             buttons[i].setEnabled(false);
         }
-        if (!list.isEmpty()) {
-            return false;
+        if (count == temp.size() && list.isEmpty()) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     void executeSelected(boolean isChoosed) {
