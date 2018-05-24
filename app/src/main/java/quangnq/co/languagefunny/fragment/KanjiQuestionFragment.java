@@ -402,8 +402,8 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         KanjiQuestionEntity currentKanji = kanjiQuestionEntityManager.get(index);
         tvConten.setText(currentKanji.getContent());
 
-        initialButton(layoutButtonOn, onButtons, currentKanji.getListOnyomi(), listTotalOn);
-        initialButton(layoutButtonKun, kunButtons, currentKanji.getListKunyomi(), listTotalKun);
+        initialButton(onButtons, currentKanji.getListOnyomi(), listTotalOn);
+        initialButton(kunButtons, currentKanji.getListKunyomi(), listTotalKun);
 
         listKanjiSample.clear();
         listKanjiSample.addAll(currentKanji.getListSample());
@@ -419,7 +419,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         btnAdd.setEnabled(false);
     }
 
-    void initialButton(LinearLayout layoutButtons, Button[] buttons, ArrayList<String> listOnKun, ArrayList<String> listTotal) {
+    void initialButton(Button[] buttons, ArrayList<String> listOnKun, ArrayList<String> listTotal) {
         buttonTexts.clear();
         for (String s : listOnKun) {
             buttonTexts.add(s);
