@@ -102,4 +102,12 @@ public class KanjiQuestionEntity extends QuestionEntity implements JICommon {
   public ArrayList<String> getListOnyomi() {
     return listOnyomi;
   }
+
+    public void setListKunyomi(ArrayList<String> listKunyomi) {
+        this.listKunyomi = listKunyomi;
+    }
+
+    public void setListOnyomi(ArrayList<String> listOnyomi) {
+        this.listOnyomi = listOnyomi;
+    }
 }

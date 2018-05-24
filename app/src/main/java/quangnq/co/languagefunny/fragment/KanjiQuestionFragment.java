@@ -90,7 +90,14 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         tvConten.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                openEditDialog();
+                if (isKanjiSampleQuestion) {
+                    openEditDialog();
+                } else {
+                    if (btnConirmNext.getText().toString().equals(NEXT_BUTTON)) {
+                        openEditDialogKanji();
+                    }
+                }
+
                 return true;
             }
         });
@@ -340,7 +347,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
             }
             Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
             currentQuestionEntity.setIsSave(NOT_SAVE);
-            ((KanjiQuestionEntity)currentQuestionEntity).updateToFile();
+            ((KanjiQuestionEntity) currentQuestionEntity).updateToFile();
             int temp = Integer.parseInt(tvQuestionTrue.getText().toString());
             temp++;
             tvQuestionTrue.setText(Integer.toString(temp));
@@ -450,7 +457,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         if (currentQuestionEntity.getNumberAgain() != MAX_NUMBER_AGAIN) {
             currentQuestionEntity.setNumberAgain(MAX_NUMBER_AGAIN);
             currentQuestionEntity.setIsSave(SAVE);
-            ((KanjiQuestionEntity)currentQuestionEntity).updateToFile();
+            ((KanjiQuestionEntity) currentQuestionEntity).updateToFile();
         }
         Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
     }
@@ -553,7 +560,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
                         if (!"".equals(answer)) {
                             currentQuestionEntity.setAnswer(answer);
                         }
-                        ((KanjiQuestionEntity)currentQuestionEntity).updateToFile();
+                        currentQuestionEntity.updateToFile();
                         Toast.makeText(getActivity(), "Update Success", Toast.LENGTH_SHORT).show();
                         tvConten.setText(currentQuestionEntity.getContent());
                         if (!"".equals(tvDisplay.getText())) {
@@ -568,6 +575,51 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
                             btnThree.setText(currentQuestionEntity.getAnswer());
                         if (listChoice.get(3).isTrue)
                             btnFour.setText(currentQuestionEntity.getAnswer());
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
+    }
+
+    void openEditDialogKanji() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        // Get the layout inflater
+        final KanjiQuestionEntity entity = (KanjiQuestionEntity) currentQuestionEntity;
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_kanji_update, null);
+        final EditText editContent = (EditText) view.findViewById(R.id.content_input);
+        final EditText editDisplay = (EditText) view.findViewById(R.id.display_input);
+        final EditText editOnyomi = (EditText) view.findViewById(R.id.on_input);
+        final EditText editKunyomi = (EditText) view.findViewById(R.id.kun_input);
+        editContent.setText(currentQuestionEntity.getContent());
+        editDisplay.setText(currentQuestionEntity.getDisplay());
+        editOnyomi.setText(entity.createStringFromArray(entity.getListOnyomi()));
+        editKunyomi.setText(entity.createStringFromArray(entity.getListKunyomi()));
+        builder.setView(view)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String content = String.valueOf(editContent.getText()).trim();
+                        String display = String.valueOf(editDisplay.getText()).trim();
+                        String onyomi = String.valueOf(editOnyomi.getText()).trim();
+                        String kunyomi = String.valueOf(editKunyomi.getText()).trim();
+                        if (!"".equals(content)) {
+                            entity.setContent(content);
+                        }
+                        if (!"".equals(display)) {
+                            entity.setDisplay(display);
+                        }
+                        entity.createListOnyomi(onyomi);
+                        entity.createListKunyomi(kunyomi);
+                        entity.updateToFile();
+                        Toast.makeText(getActivity(), "Update Success", Toast.LENGTH_SHORT).show();
+                        tvConten.setText(currentQuestionEntity.getContent());
+                        if (!"".equals(tvDisplay.getText())) {
+                            tvDisplay.setText(currentQuestionEntity.getDisplay());
+                        }
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
