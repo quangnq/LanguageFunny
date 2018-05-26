@@ -101,6 +101,19 @@ public class QuestionEntity extends BaseEntity {
         }
     }
     
+    public void deleteQuestionToFile() {
+        ArrayList<String> list = FileCommon.readFile(this.getLessonEntity().getPath());
+        for (int i = 0; i < list.size(); i++) {
+            String id = list.get(i).split("_")[0];
+            if (this.getId().equals(id)) {
+                list.remove(i);
+                Collections.sort(list);
+                FileCommon.writeFile(this.getLessonEntity().getPath(), list, false);
+                return;
+            }
+        }
+    }
+    
     public String createString () {
         return this.getId() + "_" + this.content + "_" + this.answer + "_" + this.display + "_" + this.isDifficult + "_" + this.isSave + "_" + this.numberAgain;
     }

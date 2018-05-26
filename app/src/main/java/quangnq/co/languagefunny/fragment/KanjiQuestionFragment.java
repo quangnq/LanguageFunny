@@ -101,6 +101,16 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
                 return true;
             }
         });
+    
+        tvDisplay.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (isKanjiSampleQuestion && btnConirmNext.getText().toString().equals(NEXT_BUTTON)) {
+                    openDeleteDialog("Confirm", "You want to delete this question ???");
+                }
+                return true;
+            }
+        });
 
         return view;
     }
@@ -164,6 +174,9 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         listTotalOn = KanjiQuestionEntityManager.createListTotalOn((LessonEntityManager) getArguments().getSerializable(KEY_LIST_LESSON_SELECTED));
         listTotalKun = KanjiQuestionEntityManager.createListTotalKun((LessonEntityManager) getArguments().getSerializable(KEY_LIST_LESSON_SELECTED));
         index = 0;
+        tvQuestionSum.setText(Integer.toString(kanjiQuestionEntityManager.size()));
+        tvQuestionAnswered.setText("0");
+        tvQuestionTrue.setText("0");
         display();
     }
 
@@ -247,7 +260,6 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
             case R.id.btn_conirm_next:
                 if (btnConirmNext.getText().equals(NEXT_BUTTON)) {
                     executeButtonNext();
-                    btnConirmNext.setText(CONFIRM_BUTTON);
                 } else {
                     if (isKanjiSampleQuestion) {
                         setDisplayControllAfterSelected();
@@ -512,6 +524,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
 
     void executeButtonNext() {
         indexKanjiSample++;
+        btnConirmNext.setText(CONFIRM_BUTTON);
         displayKanjiSample();
     }
 
@@ -634,5 +647,27 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
             }
         });
         builder.create().show();
+    }
+    
+    private void openDeleteDialog(String title, String content) {
+        String s = "";
+        AlertDialog.Builder builder = new AlertDialog.Builder(getMainActivity());
+        builder.setTitle(title);
+        builder.setMessage(content);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                currentQuestionEntity.deleteQuestionToFile();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
