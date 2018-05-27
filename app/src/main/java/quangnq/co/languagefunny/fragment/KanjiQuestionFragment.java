@@ -39,8 +39,8 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     QuestionEntity currentQuestionEntity;
     int index;
 
-    Button[] kunButtons = new Button[6];
-    Button[] onButtons = new Button[6];
+    Button[] kunButtons = new Button[8];
+    Button[] onButtons = new Button[8];
     LinearLayout layoutButtonKun, layoutButtonOn, layoutKanjiQuestion, layoutKanjiQuestionSample, layoutTotal;
 
     int indexKanjiSample;
@@ -336,7 +336,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
                     if (buttons[i].isActivated()) {
                         list.remove(j);
                     }
-                    buttons[i].setTextColor(Color.GREEN);
+                    buttons[i].setTextColor(Color.RED);
                     break;
                 }
             }
@@ -419,11 +419,13 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         isKanjiSampleQuestion = false;
         indexKanjiSample = -1;
         KanjiQuestionEntity currentKanji = kanjiQuestionEntityManager.get(index);
-        tvConten.setText(currentKanji.getContent());
+        
 
         initialButton(onButtons, currentKanji.getListOnyomi(), listTotalOn);
         initialButton(kunButtons, currentKanji.getListKunyomi(), listTotalKun);
-
+        tvConten.setText(currentKanji.getContent() + " (" + currentKanji.getListOnyomi().size()
+            + ", " + currentKanji.getListKunyomi().size() + ")");
+        
         listKanjiSample.clear();
         listKanjiSample.addAll(currentKanji.getListSample());
         Collections.shuffle(listKanjiSample);
