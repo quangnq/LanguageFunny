@@ -77,8 +77,39 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
         return true;
       }
     });
+
+    tvDisplay.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View view) {
+        if (btnConirmNext.getText().toString().equals(NEXT_BUTTON)) {
+          openDeleteDialog("Confirm", "You want to delete this question ???");
+        }
+        return true;
+      }
+    });
     
     return view;
+  }
+
+  private void openDeleteDialog(String title, String content) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(getMainActivity());
+    builder.setTitle(title);
+    builder.setMessage(content);
+    builder.setCancelable(false);
+    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        executeButtonNext();
+      }
+    });
+    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        currentQuestionEntity.deleteQuestionToFile();
+      }
+    });
+    AlertDialog alertDialog = builder.create();
+    alertDialog.show();
   }
   
   @Override
@@ -281,7 +312,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
       case R.id.btn_conirm_next:
         if (btnConirmNext.getText().equals(NEXT_BUTTON)) {
           executeButtonNext();
-          btnConirmNext.setText(CONFIRM_BUTTON);
+
         } else {
           setDisplayControllAfterSelected();
           executeSelected(false);
@@ -316,7 +347,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   }
   
   void executeButtonAdd() {
-  
+
   }
   
 }

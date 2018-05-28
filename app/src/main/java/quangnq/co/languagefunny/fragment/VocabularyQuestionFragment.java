@@ -21,7 +21,16 @@ public class VocabularyQuestionFragment extends QuestionFragment {
         currentQuestionEntity.setAnswer(temp);
         currentQuestionEntity.updateToFile();
         tvConten.setText(currentQuestionEntity.getContent());
-        tvQuestionAnswered.setText(currentQuestionEntity.getAnswer());
+
+        if (listChoice.get(0).isTrue) {
+            btnOne.setText(currentQuestionEntity.getAnswer());
+        } else if (listChoice.get(1).isTrue) {
+            btnTwo.setText(currentQuestionEntity.getAnswer());
+        } else if (listChoice.get(2).isTrue) {
+            btnThree.setText(currentQuestionEntity.getAnswer());
+        } else if (listChoice.get(3).isTrue) {
+            btnFour.setText(currentQuestionEntity.getAnswer());
+        }
     }
     
     @Override
@@ -82,6 +91,7 @@ public class VocabularyQuestionFragment extends QuestionFragment {
     @Override
     void executeButtonNext() {
         index++;
+        btnConirmNext.setText(CONFIRM_BUTTON);
         display();
     }
 }

@@ -652,7 +652,6 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     }
     
     private void openDeleteDialog(String title, String content) {
-        String s = "";
         AlertDialog.Builder builder = new AlertDialog.Builder(getMainActivity());
         builder.setTitle(title);
         builder.setMessage(content);
