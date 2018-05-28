@@ -29,6 +29,19 @@ public class KanjiSampleQuestionEntity extends QuestionEntity implements JICommo
         questionEntity.getLessonEntity());
     this.idKanjiQuestion = questionEntity.getId().substring(0, LENGTH_ID_QUESTION);
   }
+
+  public KanjiSampleQuestionEntity(QuestionEntity questionEntity, String idKanjiQuestion) {
+    super(questionEntity.getId(),
+            questionEntity.getContent(),
+            questionEntity.getAnswer(),
+            questionEntity.getDisplay(),
+            questionEntity.getIsDifficult(),
+            questionEntity.getIsSave(),
+            questionEntity.getNumberAgain(),
+            questionEntity.getPath(),
+            questionEntity.getLessonEntity());
+    this.idKanjiQuestion = idKanjiQuestion;
+  }
   
   public String getIdKanjiQuestion() {
     return idKanjiQuestion;

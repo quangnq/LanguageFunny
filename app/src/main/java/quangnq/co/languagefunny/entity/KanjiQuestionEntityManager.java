@@ -27,7 +27,7 @@ public class KanjiQuestionEntityManager extends ArrayList<KanjiQuestionEntity> i
                   Integer.parseInt(arrs[7].trim()), lessonEntity.getPath() + "/" + arrs[0].trim(), lessonEntity);
           if (this.isContain(questionEntity) == -1) {
             if (lessonEntity.isChecked() || questionEntity.getIsSave() == SAVE || questionEntity.getNumberAgain() > MIN_NUMBER_AGAIN) {
-              questionEntity.createListSample(list);
+//              questionEntity.createListSample(list);
               this.add(questionEntity);
             }
           }

@@ -16,7 +16,6 @@ public class KanjiQuestionEntity extends QuestionEntity implements JICommon {
   private ArrayList<String> listOnyomi = new ArrayList<>();
   
   private ArrayList<KanjiSampleQuestionEntity> listSample = new ArrayList<>();
-
   
   public KanjiQuestionEntity(String id, String content, String onyomi, String kunyomi, String display,
       int isDifficult, int isSave, int numberAgain, String path, LessonEntity lessonEntity) {
@@ -37,6 +36,17 @@ public class KanjiQuestionEntity extends QuestionEntity implements JICommon {
                   arrs[3].trim(), Integer.parseInt(arrs[4].trim()), Integer.parseInt(arrs[5].trim()),
                   Integer.parseInt(arrs[6].trim()), this.getPath() + "/" + arrs[0].trim(), this.getLessonEntity(), this.getId()));
         }
+      }
+    }
+  }
+
+  public void createListSample(QuestionEntityManager questionEntities) {
+    listSample.clear();
+    KanjiSampleQuestionEntity kanjiSampleQuestionEntity;
+    for (QuestionEntity entity : questionEntities) {
+      if (entity.getContent().contains(this.getContent().trim())) {
+        kanjiSampleQuestionEntity = new KanjiSampleQuestionEntity(entity, this.getId());
+        listSample.add(kanjiSampleQuestionEntity);
       }
     }
   }

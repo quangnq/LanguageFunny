@@ -27,8 +27,11 @@ import quangnq.co.languagefunny.entity.Choice;
 import quangnq.co.languagefunny.entity.KanjiQuestionEntity;
 import quangnq.co.languagefunny.entity.KanjiQuestionEntityManager;
 import quangnq.co.languagefunny.entity.KanjiSampleQuestionEntity;
+import quangnq.co.languagefunny.entity.LanguageEntity;
+import quangnq.co.languagefunny.entity.LearningTypeEntity;
 import quangnq.co.languagefunny.entity.LessonEntityManager;
 import quangnq.co.languagefunny.entity.QuestionEntity;
+import quangnq.co.languagefunny.entity.QuestionEntityManager;
 
 public class KanjiQuestionFragment extends BaseFragment implements View.OnClickListener {
 
@@ -50,6 +53,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     ArrayList<String> listTotalKun = new ArrayList<>();
     ArrayList<String> listTotalOn = new ArrayList<>();
     ArrayList<String> buttonTexts = new ArrayList<>();
+    private QuestionEntityManager questionEntities = new QuestionEntityManager();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,7 +128,8 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         layoutKanjiQuestion.setVisibility(View.VISIBLE);
         newButtons(layoutButtonOn, onButtons);
         newButtons(layoutButtonKun, kunButtons);
-
+        LanguageEntity languageEntity = new LanguageEntity("Japanese", PATH_LANGUAGE_FUNNY + "/Japanese");
+        questionEntities.createAllQuestion(new LearningTypeEntity("Vocabulary", languageEntity.getPath()+"/Vocabulary", languageEntity));
         initial();
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -419,8 +424,8 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         isKanjiSampleQuestion = false;
         indexKanjiSample = -1;
         KanjiQuestionEntity currentKanji = kanjiQuestionEntityManager.get(index);
-        
 
+        currentKanji.createListSample(questionEntities);
         initialButton(onButtons, currentKanji.getListOnyomi(), listTotalOn);
         initialButton(kunButtons, currentKanji.getListKunyomi(), listTotalKun);
         tvConten.setText(currentKanji.getContent() + " (" + currentKanji.getListOnyomi().size()
