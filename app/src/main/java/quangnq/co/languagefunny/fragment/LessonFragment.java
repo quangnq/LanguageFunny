@@ -109,6 +109,7 @@ public class LessonFragment extends BaseFragment<LessonEntity> implements Lesson
       }
     });
     AlertDialog alertDialog = builder.create();
+    alertDialog.setCanceledOnTouchOutside(true);
     alertDialog.show();
   }
   
