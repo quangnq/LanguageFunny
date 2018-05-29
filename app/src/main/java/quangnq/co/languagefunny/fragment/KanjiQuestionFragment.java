@@ -512,9 +512,9 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     String lessonSelecteds = getArguments().getString(KEY_STRING_LESSON_SELECTEDS);
     if (lessonSelecteds != null && !"".equals(lessonSelecteds)) {
       if (getArguments().getBoolean(KEY_ISAPPEND)) {
-        FileCommon.writeFile(currentQuestionEntity.getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, true);
+        FileCommon.writeFile(kanjiQuestionEntityManager.get(0).getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, true);
       } else {
-        FileCommon.writeFile(currentQuestionEntity.getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, false);
+        FileCommon.writeFile(kanjiQuestionEntityManager.get(0).getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, false);
       }
     }
     
