@@ -356,8 +356,18 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     void executeSelected(boolean isChoosed) {
         if (isKanjiSampleQuestion) {
             if (!isChoosed) {
+                if (currentQuestionEntity.getNumberAgain() != MAX_NUMBER_AGAIN) {
+                    currentQuestionEntity.setNumberAgain(MAX_NUMBER_AGAIN);
+                    currentQuestionEntity.updateToFile();
+                }
+                
                 listKanjiSample.add(listKanjiSample.get(indexKanjiSample));
             }
+            if (currentQuestionEntity.getNumberAgain() > MIN_NUMBER_AGAIN) {
+                currentQuestionEntity.setNumberAgain(currentQuestionEntity.getNumberAgain() - 1);
+                currentQuestionEntity.updateToFile();
+            }
+            
             return;
         }
 

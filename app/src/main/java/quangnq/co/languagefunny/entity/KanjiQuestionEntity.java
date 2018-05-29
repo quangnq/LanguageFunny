@@ -44,7 +44,7 @@ public class KanjiQuestionEntity extends QuestionEntity implements JICommon {
     listSample.clear();
     KanjiSampleQuestionEntity kanjiSampleQuestionEntity;
     for (QuestionEntity entity : questionEntities) {
-      if (entity.getContent().contains(this.getContent().trim())) {
+      if (entity.getContent().contains(this.getContent().trim()) || entity.getAnswer().contains(this.getContent().trim())) {
         kanjiSampleQuestionEntity = new KanjiSampleQuestionEntity(entity, this.getId());
         listSample.add(kanjiSampleQuestionEntity);
       }
