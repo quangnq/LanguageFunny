@@ -14,7 +14,7 @@ public class LessonEntityManager extends ArrayList<LessonEntity> implements JICo
 
     public static LessonEntityManager createListEntity(LearningTypeEntity learningTypeEntity) {
         LessonEntityManager lessonEntities = new LessonEntityManager();
-        ArrayList<String> list = FileCommon.getListFolderName(learningTypeEntity.getPath());
+        ArrayList<String> list = FileCommon.getListFileName(learningTypeEntity.getPath());
         LessonEntity entity;
         for (String id : list) {
             entity = new LessonEntity(id, learningTypeEntity.getPath() + "/" + id, learningTypeEntity);

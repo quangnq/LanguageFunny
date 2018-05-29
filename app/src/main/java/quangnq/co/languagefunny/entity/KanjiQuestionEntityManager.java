@@ -79,7 +79,6 @@ public class KanjiQuestionEntityManager extends ArrayList<KanjiQuestionEntity> i
           for (int i = 0; i < arrs.length; i++) {
             if (!"".equals(arrs[i].trim())) {
               listTotal.add(arrs[i].trim());
-              Log.i("createListTotalOn: ", "createListTotalOn: " + arrs[i].trim());
             }
           }
         }
