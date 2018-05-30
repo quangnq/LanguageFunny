@@ -99,13 +99,14 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialogInterface, int i) {
+        currentQuestionEntity.deleteQuestionToFile();
         executeButtonNext();
       }
     });
     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialogInterface, int i) {
-        currentQuestionEntity.deleteQuestionToFile();
+        dialogInterface.cancel();
       }
     });
     AlertDialog alertDialog = builder.create();
