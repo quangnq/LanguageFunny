@@ -86,7 +86,29 @@ public class KanjiQuestionEntityManager extends ArrayList<KanjiQuestionEntity> i
     }
     return listTotal;
   }
-  
+
+  public static ArrayList<String> createListTotalNghia(LessonEntityManager lessonEntities) {
+    ArrayList<String> list;
+    String[] arrs;
+    ArrayList<String> listTotalKun = new ArrayList<>();
+    for (LessonEntity lessonEntity : lessonEntities) {
+      list = FileCommon.readFile(lessonEntity.getPath());
+      for (String s : list) {
+        arrs = s.split("_");
+        if (arrs.length == LENGTH_ARR_KANJI_QUESTION && arrs[0].length() == LENGTH_ID_QUESTION) {
+          arrs = arrs[3].split(";");
+          for (int i = 0; i < arrs.length; i++) {
+            if (!"".equals(arrs[i].trim())) {
+              listTotalKun.add(arrs[i].trim());
+              Log.i("createListTotalKun: ", "createListTotalKun: " + arrs[i].trim());
+            }
+          }
+        }
+      }
+    }
+    return listTotalKun;
+  }
+
   public void createEntityListFromLessonEntity(LessonEntity lessonEntity) {
     ArrayList<String> list = FileCommon.readFile(lessonEntity.getPath());
     KanjiQuestionEntity questionEntity;

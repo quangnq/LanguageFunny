@@ -44,7 +44,8 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
   
   Button[] kunButtons = new Button[8];
   Button[] onButtons = new Button[8];
-  LinearLayout layoutButtonKun, layoutButtonOn, layoutKanjiQuestion, layoutKanjiQuestionSample, layoutTotal;
+  Button[] nghiaButtons = new Button[4];
+  LinearLayout layoutButtonKun, layoutButtonOn, layoutButtonNghia, layoutKanjiQuestion, layoutKanjiQuestionSample, layoutTotal;
   
   int indexKanjiSample;
   boolean isKanjiSampleQuestion;
@@ -52,6 +53,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
   ArrayList<Choice> listChoice = new ArrayList<>();
   ArrayList<String> listTotalKun = new ArrayList<>();
   ArrayList<String> listTotalOn = new ArrayList<>();
+  ArrayList<String> listTotalNghia = new ArrayList<>();
   ArrayList<String> buttonTexts = new ArrayList<>();
   private QuestionEntityManager questionEntities = new QuestionEntityManager();
   
@@ -124,11 +126,12 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     super.onViewCreated(view, savedInstanceState);
     layoutButtonKun = view.findViewById(R.id.layout_buton_kun);
     layoutButtonOn = view.findViewById(R.id.layout_buton_on);
+    layoutButtonNghia = view.findViewById(R.id.layout_buton_nghia);
     layoutKanjiQuestionSample.setVisibility(View.GONE);
     layoutKanjiQuestion.setVisibility(View.VISIBLE);
     newButtons(layoutButtonOn, onButtons);
     newButtons(layoutButtonKun, kunButtons);
-    
+    newButtons(layoutButtonNghia, nghiaButtons);
     initial();
     
     view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -137,6 +140,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
         createKunButtons(layoutButtonOn, onButtons);
         createKunButtons(layoutButtonKun, kunButtons);
+        createKunButtons(layoutButtonNghia, nghiaButtons);
       }
     });
     Bundle bundle = new Bundle();
@@ -184,7 +188,11 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     
     LanguageEntity languageEntity = new LanguageEntity("Japanese", PATH_LANGUAGE_FUNNY + "/Japanese");
     questionEntities.createAllQuestion(new LearningTypeEntity("Vocabulary", languageEntity.getPath() + "/Vocabulary", languageEntity));
-    
+
+    for (KanjiQuestionEntity kanjiQuestionEntity : kanjiQuestionEntityManager) {
+      listTotalNghia.add(kanjiQuestionEntity.getDisplay());
+    }
+
     display();
   }
   
@@ -320,6 +328,10 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       boolean check = checkSelected(list, onButtons);
       list = new ArrayList<>(((KanjiQuestionEntity) currentQuestionEntity).getListKunyomi());
       check = checkSelected(list, kunButtons) && check;
+      list = new ArrayList<>();
+      list.add(currentQuestionEntity.getDisplay());
+      check = checkSelected(list, nghiaButtons) && check;
+
       executeSelected(check);
     }
     tvDisplay.setText(currentQuestionEntity.getDisplay()
@@ -448,12 +460,15 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     currentKanji.createListSample(questionEntities);
     initialButton(onButtons, currentKanji.getListOnyomi(), listTotalOn);
     initialButton(kunButtons, currentKanji.getListKunyomi(), listTotalKun);
+    ArrayList<String> nghia = new ArrayList<String>();
+    nghia.add(currentKanji.getDisplay());
+    initialButton(nghiaButtons, nghia, listTotalNghia);
     tvConten.setText(currentKanji.getContent() + " (" + currentKanji.getListOnyomi().size()
         + ", " + currentKanji.getListKunyomi().size() + ")");
     
     listKanjiSample.clear();
-    listKanjiSample.addAll(currentKanji.getListSample());
-    Collections.shuffle(listKanjiSample);
+//    listKanjiSample.addAll(currentKanji.getListSample());
+//    Collections.shuffle(listKanjiSample);
     currentQuestionEntity = currentKanji;
     
     ArrayList<KanjiQuestionEntity> listTemp = new ArrayList<>(kanjiQuestionEntityManager);
