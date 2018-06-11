@@ -34,19 +34,19 @@ import quangnq.co.languagefunny.entity.QuestionEntity;
 import quangnq.co.languagefunny.entity.QuestionEntityManager;
 
 public class KanjiQuestionFragment extends BaseFragment implements View.OnClickListener {
-  
+
   Button btnChangeLevel, btnAdd, btnConirmNext, btnOne, btnTwo, btnThree, btnFour;
   TextView tvClock, tvQuestionTrue, tvQuestionAnswered, tvQuestionSum, tvConten, tvDisplay;
-  
+
   KanjiQuestionEntityManager kanjiQuestionEntityManager = new KanjiQuestionEntityManager();
   QuestionEntity currentQuestionEntity;
   int index;
-  
+
   Button[] kunButtons = new Button[8];
   Button[] onButtons = new Button[8];
   Button[] nghiaButtons = new Button[4];
   LinearLayout layoutButtonKun, layoutButtonOn, layoutButtonNghia, layoutKanjiQuestion, layoutKanjiQuestionSample, layoutTotal;
-  
+
   int indexKanjiSample;
   boolean isKanjiSampleQuestion;
   ArrayList<KanjiSampleQuestionEntity> listKanjiSample = new ArrayList<>();
@@ -56,36 +56,36 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
   ArrayList<String> listTotalNghia = new ArrayList<>();
   ArrayList<String> buttonTexts = new ArrayList<>();
   private QuestionEntityManager questionEntities = new QuestionEntityManager();
-  
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
+
   }
-  
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_demo, container, false);
     layoutKanjiQuestion = (LinearLayout) view.findViewById(R.id.kanji_question);
     layoutKanjiQuestionSample = (LinearLayout) view.findViewById(R.id.kanji_question_sample);
     layoutTotal = (LinearLayout) view.findViewById(R.id.layout_total);
-    
+
     btnChangeLevel = (Button) view.findViewById(R.id.btn_change_level);
     btnAdd = (Button) view.findViewById(R.id.btn_add);
     btnConirmNext = (Button) view.findViewById(R.id.btn_conirm_next);
-    
+
     tvClock = (TextView) view.findViewById(R.id.tv_clock);
     tvQuestionTrue = (TextView) view.findViewById(R.id.tv_question_true);
     tvQuestionAnswered = (TextView) view.findViewById(R.id.tv_question_answered);
     tvQuestionSum = (TextView) view.findViewById(R.id.tv_question_sum);
     tvConten = (TextView) view.findViewById(R.id.tv_content);
     tvDisplay = (TextView) view.findViewById(R.id.tv_display);
-    
+
     btnOne = (Button) view.findViewById(R.id.btn_one);
     btnTwo = (Button) view.findViewById(R.id.btn_two);
     btnThree = (Button) view.findViewById(R.id.btn_three);
     btnFour = (Button) view.findViewById(R.id.btn_four);
-    
+
     btnChangeLevel.setOnClickListener(this);
     btnAdd.setOnClickListener(this);
     btnConirmNext.setOnClickListener(this);
@@ -103,24 +103,24 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
             openEditDialogKanji();
           }
         }
-        
+
         return true;
       }
     });
-    
+
     tvDisplay.setOnLongClickListener(new View.OnLongClickListener() {
       @Override
       public boolean onLongClick(View view) {
         if (isKanjiSampleQuestion && btnConirmNext.getText().toString().equals(NEXT_BUTTON)) {
           openDeleteDialog("Confirm", "You want to delete this question ???");
-          
+
         }
         return true;
       }
     });
     return view;
   }
-  
+
   @Override
   public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
@@ -133,7 +133,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     newButtons(layoutButtonKun, kunButtons);
     newButtons(layoutButtonNghia, nghiaButtons);
     initial();
-    
+
     view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
       @Override
       public void onGlobalLayout() {
@@ -149,7 +149,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     lessonFragment.setArguments(bundle);
     setBackFragment(lessonFragment);
   }
-  
+
   void newButtons(LinearLayout layoutButtons, final Button[] buttons) {
     for (int i = 0; i < buttons.length; i++) {
       buttons[i] = new Button(getMainActivity());
@@ -173,7 +173,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       });
     }
   }
-  
+
   void initial() {
     kanjiQuestionEntityManager.clear();
     Toast.makeText(getActivity(), kanjiQuestionEntityManager.createEntityListFromLessons((LessonEntityManager) getArguments().getSerializable(KEY_LIST_LESSON_SELECTED))
@@ -185,7 +185,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     tvQuestionSum.setText(Integer.toString(kanjiQuestionEntityManager.size()));
     tvQuestionAnswered.setText("0");
     tvQuestionTrue.setText("0");
-    
+
     LanguageEntity languageEntity = new LanguageEntity("Japanese", PATH_LANGUAGE_FUNNY + "/Japanese");
     questionEntities.createAllQuestion(new LearningTypeEntity("Vocabulary", languageEntity.getPath() + "/Vocabulary", languageEntity));
 
@@ -195,7 +195,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
 
     display();
   }
-  
+
   void setButtons(Button[] buttons) {
     for (int i = 0; i < buttons.length; i++) {
       buttons[i].setText(buttonTexts.get(i));
@@ -205,7 +205,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       buttons[i].setEnabled(true);
     }
   }
-  
+
   void createKunButtons(LinearLayout layoutButtons, Button[] buttons) {
     ArrayList<Button> listTemp = new ArrayList<>();
     int[] widthButton = new int[buttons.length];
@@ -222,13 +222,13 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     for (int i = 0; i < widthButton.length; i++) {
       Log.i("onCreateView: " + i, "onCreateView: " + widthButton[i]);
       width = width + widthButton[i] + 10;
-      
+
       if (width > widthSum - 10) {
         LinearLayout linearLayout = new LinearLayout(getMainActivity());
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setPadding(0, 0, 0, 5);
-        
+
         for (int j = 0; j < listTemp.size(); j++) {
           linearLayout.addView(listTemp.get(j));
           Space space = new Space(getMainActivity());
@@ -237,7 +237,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
             linearLayout.addView(space);
           }
         }
-        
+
         layoutButtons.addView(linearLayout);
         width = widthButton[i] + 5;
         listTemp.clear();
@@ -246,7 +246,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         listTemp.add(buttons[i]);
       }
     }
-    
+
     if (width > 0) {
       LinearLayout linearLayout = new LinearLayout(getMainActivity());
       linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -263,7 +263,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       layoutButtons.addView(linearLayout);
     }
   }
-  
+
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
@@ -307,7 +307,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         break;
     }
   }
-  
+
   void setDisplayControllAfterSelected() {
     if (isKanjiSampleQuestion) {
       if (listChoice.get(0).isTrue)
@@ -322,7 +322,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       btnTwo.setEnabled(false);
       btnThree.setEnabled(false);
       btnFour.setEnabled(false);
-      
+
     } else {
       ArrayList<String> list = new ArrayList<>(((KanjiQuestionEntity) currentQuestionEntity).getListOnyomi());
       boolean check = checkSelected(list, onButtons);
@@ -338,9 +338,9 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         + "_" + currentQuestionEntity.getId());
     btnChangeLevel.setEnabled(true);
     btnConirmNext.setText(NEXT_BUTTON);
-    
+
   }
-  
+
   boolean checkSelected(ArrayList<String> list, Button[] buttons) {
     ArrayList<String> temp = new ArrayList<>(list);
     int count = 0;
@@ -367,7 +367,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     }
     return false;
   }
-  
+
   void executeSelected(boolean isChoosed) {
     if (isKanjiSampleQuestion) {
       if (!isChoosed) {
@@ -375,7 +375,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
           currentQuestionEntity.setNumberAgain(MAX_NUMBER_AGAIN);
           currentQuestionEntity.updateToFile();
         }
-        
+
         listKanjiSample.add(listKanjiSample.get(indexKanjiSample));
       } else {
         if (currentQuestionEntity.getNumberAgain() > MIN_NUMBER_AGAIN) {
@@ -386,7 +386,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
       return;
     }
-    
+
     if (isChoosed) {
       if (currentQuestionEntity.getNumberAgain() > MIN_NUMBER_AGAIN) {
         int number = currentQuestionEntity.getNumberAgain();
@@ -409,7 +409,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     answered++;
     tvQuestionAnswered.setText(Integer.toString(answered));
   }
-  
+
   void displayKanjiSample() {
     // if index kanji sample >= list kanji Sample then display next kanji Question
     if (indexKanjiSample >= listKanjiSample.size()) {
@@ -419,6 +419,8 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     }
     layoutKanjiQuestion.setVisibility(View.GONE);
     layoutKanjiQuestionSample.setVisibility(View.VISIBLE);
+    tvDisplay.setVisibility(View.VISIBLE);
+
     isKanjiSampleQuestion = true;
     // if index kanji sample < list kanji Sample then display next kanji Sample Question
     currentQuestionEntity = listKanjiSample.get(indexKanjiSample);
@@ -429,7 +431,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       }
     }
     tvConten.setText(currentQuestionEntity.getContent());
-    
+
     listChoice.clear();
     String answerTrue = currentQuestionEntity.getAnswer();
     listChoice.add(new Choice(answerTrue, true));
@@ -445,7 +447,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     }
     setDisplayControllBeforeSelect();
   }
-  
+
   void display() {
     if (index >= kanjiQuestionEntityManager.size()) {
       showDialog("You are finished those Lesson", "You are continue test");
@@ -453,10 +455,12 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     }
     layoutKanjiQuestion.setVisibility(View.VISIBLE);
     layoutKanjiQuestionSample.setVisibility(View.GONE);
+    tvDisplay.setVisibility(View.GONE);
+
     isKanjiSampleQuestion = false;
     indexKanjiSample = -1;
     KanjiQuestionEntity currentKanji = kanjiQuestionEntityManager.get(index);
-    
+
     currentKanji.createListSample(questionEntities);
     initialButton(onButtons, currentKanji.getListOnyomi(), listTotalOn);
     initialButton(kunButtons, currentKanji.getListKunyomi(), listTotalKun);
@@ -465,21 +469,21 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     initialButton(nghiaButtons, nghia, listTotalNghia);
     tvConten.setText(currentKanji.getContent() + " (" + currentKanji.getListOnyomi().size()
         + ", " + currentKanji.getListKunyomi().size() + ")");
-    
+
     listKanjiSample.clear();
 //    listKanjiSample.addAll(currentKanji.getListSample());
 //    Collections.shuffle(listKanjiSample);
     currentQuestionEntity = currentKanji;
-    
+
     ArrayList<KanjiQuestionEntity> listTemp = new ArrayList<>(kanjiQuestionEntityManager);
     Collections.shuffle(listTemp);
-    
+
     tvQuestionSum.setText(Integer.toString(kanjiQuestionEntityManager.size()));
     btnChangeLevel.setEnabled(false);
     tvDisplay.setText("");
     btnAdd.setEnabled(false);
   }
-  
+
   void initialButton(Button[] buttons, ArrayList<String> listOnKun, ArrayList<String> listTotal) {
     buttonTexts.clear();
     for (String s : listOnKun) {
@@ -504,17 +508,17 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     Collections.shuffle(buttonTexts);
     setButtons(buttons);
   }
-  
+
   void addQuestion() {
     if (isKanjiSampleQuestion) {
       listKanjiSample.add((KanjiSampleQuestionEntity) currentQuestionEntity);
       return;
     }
-    
+
     kanjiQuestionEntityManager.add((KanjiQuestionEntity) currentQuestionEntity);
     tvQuestionSum.setText(Integer.toString(kanjiQuestionEntityManager.size()));
     listKanjiSample.clear();
-    
+
     if (currentQuestionEntity.getNumberAgain() != MAX_NUMBER_AGAIN) {
       currentQuestionEntity.setNumberAgain(MAX_NUMBER_AGAIN);
       currentQuestionEntity.setIsSave(SAVE);
@@ -522,7 +526,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     }
     Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
   }
-  
+
   void showDialog(String title, String content) {
     String lessonSelecteds = getArguments().getString(KEY_STRING_LESSON_SELECTEDS);
     if (lessonSelecteds != null && !"".equals(lessonSelecteds)) {
@@ -532,7 +536,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         FileCommon.writeFile(kanjiQuestionEntityManager.get(0).getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, false);
       }
     }
-    
+
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
     builder.setTitle(title);
     builder.setMessage(content);
@@ -553,7 +557,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     AlertDialog alertDialog = builder.create();
     alertDialog.show();
   }
-  
+
   boolean clickButton(int numberClick) {
     setDisplayControllAfterSelected();
     if (listChoice.get(numberClick).isTrue) {
@@ -563,13 +567,13 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     executeSelected(false);
     return false;
   }
-  
+
   void executeButtonNext() {
     indexKanjiSample++;
     btnConirmNext.setText(CONFIRM_BUTTON);
     displayKanjiSample();
   }
-  
+
   void setDisplayControllBeforeSelect() {
     if (isKanjiSampleQuestion) {
       for (int i = listChoice.size(); i < 4; i++) {
@@ -589,12 +593,12 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       btnThree.setEnabled(true);
       btnFour.setEnabled(true);
     }
-    
+
     btnChangeLevel.setEnabled(false);
     tvDisplay.setText("");
     btnAdd.setEnabled(false);
   }
-  
+
   void openEditDialog() {
     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
     // Get the layout inflater
@@ -628,7 +632,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
             if (!"".equals(tvDisplay.getText())) {
               tvDisplay.setText(currentQuestionEntity.getDisplay());
             }
-            
+
             if (listChoice.get(0).isTrue)
               btnOne.setText(currentQuestionEntity.getAnswer());
             if (listChoice.get(1).isTrue)
@@ -645,7 +649,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     });
     builder.create().show();
   }
-  
+
   void openEditDialogKanji() {
     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
     // Get the layout inflater
@@ -690,7 +694,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
     });
     builder.create().show();
   }
-  
+
   private void openDeleteDialog(String title, String content) {
     AlertDialog.Builder builder = new AlertDialog.Builder(getMainActivity());
     builder.setTitle(title);
