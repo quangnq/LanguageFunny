@@ -55,7 +55,8 @@ public class VocabularyQuestionFragment extends QuestionFragment {
             return;
         }
         currentQuestionEntity = questionEntityManager.get(index);
-        tvConten.setText(currentQuestionEntity.getContent());
+        String[] arr = currentQuestionEntity.getContent().split("-");
+        tvConten.setText(arr[0].trim());
         
         listChoice.clear();
         String answerTrue = currentQuestionEntity.getAnswer();

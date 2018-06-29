@@ -34,6 +34,7 @@ public class KanjiQuestionEntityManager extends ArrayList<KanjiQuestionEntity> i
         } else if (arrs.length == LENGTH_ARR_VOCABULARY_QUESTION && arrs[0].length() == LENGTH_ID_KANJI_SAMPLE_QUESTION) {
 
         } else {
+          Log.i("Ok : ", "Error " + lessonEntity.getId() + " : " + arrs[0].trim());
           return "Error " + lessonEntity.getId() + " : " + arrs[0].trim();
         }
       }
@@ -57,7 +58,6 @@ public class KanjiQuestionEntityManager extends ArrayList<KanjiQuestionEntity> i
           for (int i = 0; i < arrs.length; i++) {
             if (!"".equals(arrs[i].trim())) {
               listTotalKun.add(arrs[i].trim());
-              Log.i("createListTotalKun: ", "createListTotalKun: " + arrs[i].trim());
             }
           }
         }

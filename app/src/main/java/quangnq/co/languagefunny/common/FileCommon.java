@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 /**
@@ -26,6 +27,7 @@ public class FileCommon {
     for (int i = 0; i < files.length; i++) {
       list.add(files[i].getName());
     }
+    Collections.sort(list);
     return list;
   }
   
@@ -56,6 +58,7 @@ public class FileCommon {
     for (int i = 0; i < files.length; i++) {
       list.add(files[i].getName());
     }
+    Collections.sort(list);
     return list;
   }
 

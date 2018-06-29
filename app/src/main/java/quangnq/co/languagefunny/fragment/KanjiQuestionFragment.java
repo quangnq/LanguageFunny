@@ -533,7 +533,13 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
       if (getArguments().getBoolean(KEY_ISAPPEND)) {
         FileCommon.writeFile(kanjiQuestionEntityManager.get(0).getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, true);
       } else {
-        FileCommon.writeFile(kanjiQuestionEntityManager.get(0).getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, false);
+        try {
+          FileCommon.writeFile(kanjiQuestionEntityManager.get(0).getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, false);
+        } catch (Exception e) {
+          Log.i("showDialog: ", "showDialog: " + kanjiQuestionEntityManager.get(0).getId());
+          Log.i("showDialog: ", "showDialog: " + kanjiQuestionEntityManager.get(0).getLessonEntity().getLearningTypeEntity().getPath());
+        }
+        
       }
     }
 

@@ -165,6 +165,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
   }
   
   void executeSelected(boolean isChoosed) {
+    tvConten.setText(currentQuestionEntity.getContent());
     if (isChoosed) {
       if (currentQuestionEntity.getNumberAgain() > MIN_NUMBER_AGAIN) {
         int number = currentQuestionEntity.getNumberAgain();
@@ -186,6 +187,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     int answered = Integer.parseInt(tvQuestionAnswered.getText().toString());
     answered++;
     tvQuestionAnswered.setText(Integer.toString(answered));
+    
   }
   
   void addQuestion() {
