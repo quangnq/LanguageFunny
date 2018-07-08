@@ -383,6 +383,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
           currentQuestionEntity.updateToFile();
         }
       }
+      tvConten.setText(currentQuestionEntity.getContent());
       Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
       return;
     }
@@ -430,7 +431,8 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         break;
       }
     }
-    tvConten.setText(currentQuestionEntity.getContent());
+    String[] arr = currentQuestionEntity.getContent().split("-");
+    tvConten.setText(arr[0].trim());
 
     listChoice.clear();
     String answerTrue = currentQuestionEntity.getAnswer();
@@ -471,8 +473,8 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
         + ", " + currentKanji.getListKunyomi().size() + ")");
 
     listKanjiSample.clear();
-//    listKanjiSample.addAll(currentKanji.getListSample());
-//    Collections.shuffle(listKanjiSample);
+    listKanjiSample.addAll(currentKanji.getListSample());
+    Collections.shuffle(listKanjiSample);
     currentQuestionEntity = currentKanji;
 
     ArrayList<KanjiQuestionEntity> listTemp = new ArrayList<>(kanjiQuestionEntityManager);
