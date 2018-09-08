@@ -382,6 +382,7 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
           currentQuestionEntity.setNumberAgain(currentQuestionEntity.getNumberAgain() - 1);
           currentQuestionEntity.updateToFile();
         }
+        btnAdd.setEnabled(true);
       }
       tvConten.setText(currentQuestionEntity.getContent());
       Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
@@ -513,7 +514,12 @@ public class KanjiQuestionFragment extends BaseFragment implements View.OnClickL
 
   void addQuestion() {
     if (isKanjiSampleQuestion) {
-      listKanjiSample.add((KanjiSampleQuestionEntity) currentQuestionEntity);
+      if (currentQuestionEntity.getNumberAgain() != MAX_NUMBER_AGAIN) {
+        currentQuestionEntity.setNumberAgain(MAX_NUMBER_AGAIN);
+        currentQuestionEntity.updateToFile();
+      }
+  
+      listKanjiSample.add(listKanjiSample.get(indexKanjiSample));
       return;
     }
 

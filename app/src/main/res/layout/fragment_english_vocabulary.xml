@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+  
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="#36ba5f"
+    android:orientation="horizontal"
+    android:weightSum="7">
+    
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="65dp"
+      android:layout_weight="1"
+      android:gravity="start|center">
+      
+      <Button
+        android:id="@+id/btn_sound"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/ic_sound_1" />
+    </LinearLayout>
+    
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="65dp"
+      android:layout_weight="5"
+      android:orientation="vertical">
+      
+      <TextView
+        android:id="@+id/tv_clock"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:gravity="center"
+        android:text="09:59"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+      
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:background="#FAFAFA" />
+      
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        
+        <TextView
+          android:id="@+id/tv_question_true"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="right|center"
+          android:text="00"
+          android:textColor="#ffffff"
+          android:textSize="18dp"
+          android:textStyle="bold"
+          android:typeface="serif" />
+        
+        <TextView
+          android:id="@+id/tv_question_answered"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1.02"
+          android:gravity="center"
+          android:text="00"
+          android:textColor="#ffffff"
+          android:textSize="18dp"
+          android:textStyle="bold"
+          android:typeface="serif" />
+        
+        <TextView
+          android:id="@+id/tv_question_sum"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="left|center"
+          android:text="00"
+          android:textColor="#ffffff"
+          android:textSize="18dp"
+          android:textStyle="bold"
+          android:typeface="serif" />
+      </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="65dp"
+      android:layout_weight="1"
+      android:gravity="right|center">
+      
+      <Button
+        android:id="@+id/btn_add"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bcg_ic_add"
+        android:gravity="center" />
+    </LinearLayout>
+  </LinearLayout>
+  
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <TextView
+      android:id="@+id/tv_content"
+      android:layout_width="match_parent"
+      android:layout_height="85dp"
+      android:layout_margin="5dp"
+      android:background="@drawable/bcg_tv"
+      android:padding="3dp"
+      android:textColor="#020202"
+      android:textSize="24sp"
+      android:typeface="serif" />
+    
+    <TextView
+      android:id="@+id/tv_display"
+      android:layout_width="match_parent"
+      android:layout_height="85dp"
+      android:layout_margin="5dp"
+      android:background="@drawable/bcg_tv"
+      android:padding="3dp"
+      android:textColor="#020202"
+      android:textSize="20dp"
+      android:typeface="serif" />
+    
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+      
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="120dp"
+        android:orientation="vertical">
+        
+        <Button
+          android:id="@+id/btn_one"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginTop="5dp"
+          android:background="@drawable/bcg_bt_qs"
+          android:gravity="start|center"
+          android:paddingLeft="15dp"
+          android:text="Đáp án 1"
+          android:textColor="#020202"
+          android:textSize="19dp"
+          android:typeface="serif" />
+        
+        <Button
+          android:id="@+id/btn_two"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/bcg_bt_qs"
+          android:gravity="start|center"
+          android:paddingLeft="15dp"
+          android:text="Đáp án 1"
+          android:textColor="#020202"
+          android:textSize="19dp"
+          android:typeface="serif" />
+        
+        <Button
+          android:id="@+id/btn_three"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/bcg_bt_qs"
+          android:gravity="start|center"
+          android:paddingLeft="15dp"
+          android:text="Đáp án 1"
+          android:textColor="#020202"
+          android:textSize="19dp"
+          android:typeface="serif" />
+        
+        <Button
+          android:id="@+id/btn_four"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/bcg_bt_qs"
+          android:gravity="start|center"
+          android:paddingLeft="15dp"
+          android:text="Đáp án 1"
+          android:textColor="#020202"
+          android:textSize="19dp"
+          android:typeface="serif" />
+      </LinearLayout>
+      
+      <Button
+        android:id="@+id/btn_confirm_next"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bcg_bt_input_edt_press"
+        android:gravity="center"
+        android:text="Confirm"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>
