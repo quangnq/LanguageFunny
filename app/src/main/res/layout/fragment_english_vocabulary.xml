@@ -22,7 +22,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_margin="3dp"
-        android:background="@drawable/ic_sound_1" />
+        android:background="@drawable/bcg_ic_sound" />
     </LinearLayout>
     
     <LinearLayout
@@ -150,7 +150,7 @@
         android:orientation="vertical">
         
         <Button
-          android:id="@+id/btn_one"
+          android:id="@+id/btn_english_word_one"
           android:layout_width="match_parent"
           android:layout_height="40dp"
           android:layout_marginLeft="5dp"
@@ -165,7 +165,7 @@
           android:typeface="serif" />
         
         <Button
-          android:id="@+id/btn_two"
+          android:id="@+id/btn_english_word_two"
           android:layout_width="match_parent"
           android:layout_height="40dp"
           android:layout_marginLeft="5dp"
@@ -180,7 +180,7 @@
           android:typeface="serif" />
         
         <Button
-          android:id="@+id/btn_three"
+          android:id="@+id/btn_english_word_three"
           android:layout_width="match_parent"
           android:layout_height="40dp"
           android:layout_marginLeft="5dp"
@@ -195,7 +195,7 @@
           android:typeface="serif" />
         
         <Button
-          android:id="@+id/btn_four"
+          android:id="@+id/btn_english_word_four"
           android:layout_width="match_parent"
           android:layout_height="40dp"
           android:layout_marginLeft="5dp"

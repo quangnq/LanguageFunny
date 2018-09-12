@@ -14,6 +14,8 @@ public interface JICommon {
   String FILE_LESSON_LEARNED = "/0/learned.txt";
   String PATH_JAPAN_VOCABULARY = "/sdcard/LanguageFunny/Japanese/Vocabulary";
   
+  String PATH_ENGLISH_VOCABULARY = "/sdcard/LanguageFunny/English/Vocabulary/";
+  
   /* japanese */
 //  String[] ARRAY_JAPANESE_LEARNING_TYPE = {"vocabulary", "kanji", "listening"};
 //  String PATH_JAPANESE = PATH_LANGUAGE_FRIENDLY + ARRAY_LANGUAGE[0] + SLASH;

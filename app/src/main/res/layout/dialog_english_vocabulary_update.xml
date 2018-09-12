@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/layout_root"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:padding="10dp" >
+  
+  <TextView
+    android:id="@+id/title_dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Edit English Vocabulary"
+    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="English:"
+        android:textSize="20dp"
+        />
+    <EditText
+        android:id="@+id/edt_english_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+      <requestFocus />
+    </EditText>
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Kind Word"
+        android:textSize="20dp"
+        />
+    <EditText
+        android:id="@+id/edt_kind_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </EditText>
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Pronounce"
+        android:textSize="20dp"
+        />
+    <EditText
+        android:id="@+id/edt_pronounce_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </EditText>
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Vietnam"
+        android:textSize="20dp"
+        />
+    <EditText
+        android:id="@+id/edt_vietnam_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </EditText>
+
+  </LinearLayout>
+
+</LinearLayout>
