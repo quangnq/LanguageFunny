@@ -5,6 +5,12 @@ import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
 
 public class EnglishVocabuaryEntityManager extends ArrayList<EnglishVocabuaryEntity> {
   
+  public EnglishVocabuaryEntityManager(){}
+  
+  public EnglishVocabuaryEntityManager(EnglishVocabuaryEntityManager entities){
+    this.addAll(entities);
+  }
+  
   public void createListFromArrayString(ArrayList<String> strings){
     String[] arr;
     EnglishVocabuaryEntity entity;
@@ -21,5 +27,14 @@ public class EnglishVocabuaryEntityManager extends ArrayList<EnglishVocabuaryEnt
       entity.setSoundID(arr[7]);
       this.add(entity);
     }
+  }
+  
+  public int getPosition(String id) {
+    for (int i = 0; i < this.size(); i++) {
+      if (this.get(i).getId().equals(id)) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

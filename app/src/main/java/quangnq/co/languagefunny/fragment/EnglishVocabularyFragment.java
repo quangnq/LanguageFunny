@@ -98,59 +98,147 @@ public class EnglishVocabularyFragment extends QuestionFragment {
   @Override
   void initial() {
     entities.clear();
-    ArrayList<String> EntityStrings = FileCommon.readFile(PATH_ENGLISH_VOCABULARY + "vocabulary.txt");
+    ArrayList<Integer> integers = getArguments().getIntegerArrayList("list_lesson");
+    ArrayList<String> entityStrings = FileCommon.readFile(PATH_ENGLISH_VOCABULARY + "vocabulary.txt");
+    EnglishVocabuaryEntityManager allEntities = new EnglishVocabuaryEntityManager();
+    allEntities.createListFromArrayString(entityStrings);
+    for (Integer integer : integers) {
+      for (int i = integer*50; i < allEntities.size() && i < integer*50 + 50; i++) {
+        entities.add(allEntities.get(i));
+      }
+    }
+  
+    for (EnglishVocabuaryEntity entity : allEntities) {
+      if (entity.getIsSave() == 1 || entity.getNumberAgain() > 0) {
+        if (entities.getPosition(entity.getId()) == -1) {
+          entities.add(entity);
+        }
+      }
+    }
     index = 0;
-
-    for (QuestionEntity entity : questionEntityManager) {
-      if (entity.getNumberAgain() <= MIN_NUMBER_AGAIN && entity.getIsSave() == NOT_SAVE) {
-        entity.setIsSave(SAVE);
+    
+    for (EnglishVocabuaryEntity entity : entities) {
+      if (entity.getNumberAgain() <= 0 && entity.getIsSave() == 0) {
+        entity.setIsSave(1);
         entity.updateToFile();
       }
     }
 
-    Collections.shuffle(questionEntityManager);
+    Collections.shuffle(entities);
     display();
   }
 
   @Override
   void display (){
-    if (index >= questionEntityManager.size()) {
+    if (index >= entities.size()) {
       showDialog("You are finished those Lesson", "You are continue test");
       return;
     }
-    currentQuestionEntity = questionEntityManager.get(index);
-    String[] arr = currentQuestionEntity.getContent().split("-");
-    tvConten.setText(arr[0].trim());
-
+    currentEntity = entities.get(index);
+    tvVietnamWord.setText("");
+    tvPronounceWord.setText("");
+    tvQuestionSum.setText(Integer.toString(entities.size()));
+    
     listChoice.clear();
-    String answerTrue = currentQuestionEntity.getAnswer();
+    String answerTrue = currentEntity.getEnglishWord() + " " + currentEntity.getKindWord();
     listChoice.add(new Choice(answerTrue, true));
-    ArrayList<QuestionEntity> listTemp = new ArrayList<>(questionEntityManager);
-    Collections.shuffle(listTemp);
-    for (int i = 0; i < listTemp.size(); i++) {
-      if (!listTemp.get(i).getAnswer().equals(answerTrue)) {
-        listChoice.add(new Choice(listTemp.get(i).getAnswer(), false));
+    EnglishVocabuaryEntityManager tempEntities = new EnglishVocabuaryEntityManager(entities);
+    Collections.shuffle(tempEntities);
+    
+    for (EnglishVocabuaryEntity entity : tempEntities) {
+      if (!entity.getEnglishWord().trim().equals(currentEntity.getEnglishWord().trim())) {
+        listChoice.add(new Choice(entity.getEnglishWord() + " " + entity.getKindWord(), false));
       }
       if (listChoice.size() == 4) {
         break;
       }
     }
-    tvQuestionSum.setText(Integer.toString(questionEntityManager.size()));
-    setDisplayControllBeforeSelect();
+    for (int i = listChoice.size(); i < 4; i++) {
+      listChoice.add(new Choice("choice sample", false));
+    }
+    
+    Collections.shuffle(listChoice);
+  
+    btnEnglishWordOne.setBackgroundResource(R.drawable.bcg_bt_qs);
+    btnEnglishWordTwo.setBackgroundResource(R.drawable.bcg_bt_qs);
+    btnEnglishWordThree.setBackgroundResource(R.drawable.bcg_bt_qs);
+    btnEnglishWordFour.setBackgroundResource(R.drawable.bcg_bt_qs);
+    btnEnglishWordOne.setText(listChoice.get(0).content);
+    btnEnglishWordTwo.setText(listChoice.get(1).content);
+    btnEnglishWordThree.setText(listChoice.get(2).content);
+    btnEnglishWordFour.setText(listChoice.get(3).content);
+    btnEnglishWordOne.setEnabled(true);
+    btnEnglishWordTwo.setEnabled(true);
+    btnEnglishWordThree.setEnabled(true);
+    btnEnglishWordFour.setEnabled(true);
+  
+    btnAdd.setEnabled(false);
+  }
+  
+  void setDisplayControllAfterSelected () {
+    if (listChoice.get(0).isTrue)
+      btnEnglishWordOne.setBackgroundResource(R.drawable.bcg_bt_qs_true);
+    if (listChoice.get(1).isTrue)
+      btnEnglishWordTwo.setBackgroundResource(R.drawable.bcg_bt_qs_true);
+    if (listChoice.get(2).isTrue)
+      btnEnglishWordThree.setBackgroundResource(R.drawable.bcg_bt_qs_true);
+    if (listChoice.get(3).isTrue)
+      btnEnglishWordFour.setBackgroundResource(R.drawable.bcg_bt_qs_true);
+    btnEnglishWordOne.setEnabled(false);
+    btnEnglishWordTwo.setEnabled(false);
+    btnEnglishWordThree.setEnabled(false);
+    btnEnglishWordFour.setEnabled(false);
+    
+    btnConirmNext.setText(NEXT_BUTTON);
+    tvVietnamWord.setText(currentEntity.getVietnamWord());
+    tvPronounceWord.setText(currentEntity.getPronounceWord());
+  }
+  
+  void executeSelected(boolean isChoosed) {
+    if (isChoosed) {
+      if (currentEntity.getNumberAgain() > 0) {
+        currentEntity.setNumberAgain(currentEntity.getNumberAgain()-1);
+      } else {
+        currentEntity.setNumberAgain(0);
+      }
+      Toast.makeText(getActivity(), "Number Again +" + currentEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
+      currentEntity.setIsSave(NOT_SAVE);
+      currentEntity.updateToFile();
+      int numberTrue = Integer.parseInt(tvQuestionTrue.getText().toString());
+      numberTrue++;
+      tvQuestionTrue.setText(Integer.toString(numberTrue));
+      btnAdd.setEnabled(true);
+    } else {
+      addQuestion();
+    }
+    int answered = Integer.parseInt(tvQuestionAnswered.getText().toString());
+    answered++;
+    tvQuestionAnswered.setText(Integer.toString(answered));
+    
+  }
+  
+  boolean clickButton(int numberClick) {
+    setDisplayControllAfterSelected();
+    if (listChoice.get(numberClick).isTrue) {
+      executeSelected(true);
+      return true;
+    }
+    executeSelected(false);
+    return false;
   }
 
   @Override
   void addQuestion() {
 
-    questionEntityManager.add(currentQuestionEntity);
-    tvQuestionSum.setText(Integer.toString(questionEntityManager.size()));
+    entities.add(currentEntity);
+    tvQuestionSum.setText(Integer.toString(entities.size()));
 
-    if (currentQuestionEntity.getNumberAgain() != MAX_NUMBER_AGAIN) {
-      currentQuestionEntity.setNumberAgain(MAX_NUMBER_AGAIN);
-      currentQuestionEntity.setIsSave(SAVE);
-      currentQuestionEntity.updateToFile();
+    if (currentEntity.getNumberAgain() != 5) {
+      currentEntity.setNumberAgain(5);
+      currentEntity.setIsSave(1);
+      currentEntity.updateToFile();
     }
-    Toast.makeText(getActivity(), "Number Again +" + currentQuestionEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
+    Toast.makeText(getActivity(), "Number Again +" + currentEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
   }
 
   @Override
@@ -158,6 +246,50 @@ public class EnglishVocabularyFragment extends QuestionFragment {
     index++;
     btnConirmNext.setText(CONFIRM_BUTTON);
     display();
+  }
+  
+  
+  
+  @Override
+  public void onClick(View v) {
+    switch (v.getId()) {
+      case R.id.btn_add:
+        addQuestion();
+        btnAdd.setEnabled(false);
+        break;
+      case R.id.btn_sound:
+        executeButtonChange();
+        break;
+      case R.id.btn_conirm_next:
+        if (btnConirmNext.getText().equals(NEXT_BUTTON)) {
+          executeButtonNext();
+          
+        } else {
+          setDisplayControllAfterSelected();
+          executeSelected(false);
+        }
+        break;
+      case R.id.btn_english_word_one:
+        if (!clickButton(0)) {
+          btnEnglishWordOne.setBackgroundResource(R.drawable.bcg_bt_qs_false);
+        }
+        break;
+      case R.id.btn_english_word_two:
+        if (!clickButton(1)) {
+          btnTwo.setBackgroundResource(R.drawable.bcg_bt_qs_false);
+        }
+        break;
+      case R.id.btn_three:
+        if (!clickButton(2)) {
+          btnThree.setBackgroundResource(R.drawable.bcg_bt_qs_false);
+        }
+        break;
+      case R.id.btn_four:
+        if (!clickButton(3)) {
+          btnFour.setBackgroundResource(R.drawable.bcg_bt_qs_false);
+        }
+        break;
+    }
   }
   
   @Override
@@ -175,42 +307,42 @@ public class EnglishVocabularyFragment extends QuestionFragment {
     edtPronounceWord.setText(currentEntity.getPronounceWord());
     edtVietnameWord.setText(currentEntity.getVietnamWord());
     builder.setView(view)
-        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int id) {
-            String englishWord = String.valueOf(edtEnglishWord.getText()).trim();
-            String kindWord = String.valueOf(edtKindWord.getText()).trim();
-            String pronounceWord = String.valueOf(edtPronounceWord.getText()).trim();
-            String vietnameWord = String.valueOf(edtVietnameWord.getText()).trim();
-            if (!"".equals(englishWord)) {
-              currentEntity.setEnglishWord(englishWord);
-            }
-            if (!"".equals(kindWord)) {
-              currentEntity.setKindWord(kindWord);
-            }
-            if (!"".equals(pronounceWord)) {
-              currentEntity.setPronounceWord(pronounceWord);
-            }
-            if (!"".equals(vietnameWord)) {
-              currentEntity.setVietnamWord(vietnameWord);
-            }
-            currentEntity.updateToFile();
-            Toast.makeText(getActivity(), "Update Success", Toast.LENGTH_SHORT).show();
-            tvVietnamWord.setText(currentEntity.getVietnamWord());
-            if (!"".equals(tvPronounceWord.getText())) {
-              tvPronounceWord.setText(currentEntity.getPronounceWord());
-            }
-            
-            if (listChoice.get(0).isTrue)
-              btnEnglishWordOne.setText(currentEntity.getEnglishWord());
-            if (listChoice.get(1).isTrue)
-              btnEnglishWordTwo.setText(currentEntity.getEnglishWord());
-            if (listChoice.get(2).isTrue)
-              btnEnglishWordThree.setText(currentEntity.getEnglishWord());
-            if (listChoice.get(3).isTrue)
-              btnEnglishWordFour.setText(currentEntity.getEnglishWord());
+      .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+          String englishWord = String.valueOf(edtEnglishWord.getText()).trim();
+          String kindWord = String.valueOf(edtKindWord.getText()).trim();
+          String pronounceWord = String.valueOf(edtPronounceWord.getText()).trim();
+          String vietnameWord = String.valueOf(edtVietnameWord.getText()).trim();
+          if (!"".equals(englishWord)) {
+            currentEntity.setEnglishWord(englishWord);
           }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+          if (!"".equals(kindWord)) {
+            currentEntity.setKindWord(kindWord);
+          }
+          if (!"".equals(pronounceWord)) {
+            currentEntity.setPronounceWord(pronounceWord);
+          }
+          if (!"".equals(vietnameWord)) {
+            currentEntity.setVietnamWord(vietnameWord);
+          }
+          currentEntity.updateToFile();
+          Toast.makeText(getActivity(), "Update Success", Toast.LENGTH_SHORT).show();
+          tvVietnamWord.setText(currentEntity.getVietnamWord());
+          if (!"".equals(tvPronounceWord.getText())) {
+            tvPronounceWord.setText(currentEntity.getPronounceWord());
+          }
+          
+          if (listChoice.get(0).isTrue)
+            btnEnglishWordOne.setText(currentEntity.getEnglishWord());
+          if (listChoice.get(1).isTrue)
+            btnEnglishWordTwo.setText(currentEntity.getEnglishWord());
+          if (listChoice.get(2).isTrue)
+            btnEnglishWordThree.setText(currentEntity.getEnglishWord());
+          if (listChoice.get(3).isTrue)
+            btnEnglishWordFour.setText(currentEntity.getEnglishWord());
+        }
+      }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int id) {
         dialog.cancel();
       }
