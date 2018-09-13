@@ -11,6 +11,10 @@ public class EnglishVocabuaryEntityManager extends ArrayList<EnglishVocabuaryEnt
     this.addAll(entities);
   }
   
+  public EnglishVocabuaryEntityManager(ArrayList<String> stringEntities){
+    this.createListFromArrayString(stringEntities);
+  }
+  
   public void createListFromArrayString(ArrayList<String> strings){
     String[] arr;
     EnglishVocabuaryEntity entity;

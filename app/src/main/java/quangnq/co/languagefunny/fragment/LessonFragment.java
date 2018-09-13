@@ -61,13 +61,22 @@ public class LessonFragment extends BaseFragment<LessonEntity> implements Lesson
     Button btnEnter = (Button) view.findViewById(R.id.btn_enter);
     
     LessonAdapter adapter;
-    if (learningTypeEntity.getPath().contains("/Listen")) {
-      adapter = new LessonAdapter(getActivity(), createListEntity(FileCommon.getListFolderName(learningTypeEntity.getPath())));
-    } else {
-      adapter = new LessonAdapter(getActivity(), createListEntity(FileCommon.getListFileName(learningTypeEntity.getPath())));
+    if (learningTypeEntity.getPath().contains("/English/Vocabulary/")) {
+      String path = learningTypeEntity.getPath() + "vocabulary.txt";
+      ArrayList<String> entityStrings = FileCommon.readFile(path);
+      int numderLesson = entityStrings.size()/50;
+      if (entityStrings.size()%50 > 1) {
+        numderLesson++;
+      }
+      LessonEntity entity;
+      for (int i = 0; i < numderLesson; i++) {
+        entity = new LessonEntity(String.valueOf(i), path, learningTypeEntity);
+        lessonEntities.add(entity);
+      }
+      adapter = new LessonAdapter(getActivity(), lessonEntities);
+      listView.setAdapter(adapter);
+      adapter.setOnListViewAction(this);
     }
-    listView.setAdapter(adapter);
-    adapter.setOnListViewAction(this);
     
     btnEnter.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -122,18 +131,13 @@ public class LessonFragment extends BaseFragment<LessonEntity> implements Lesson
       }
     }
     
-    
     Bundle bundle = new Bundle();
     bundle.putSerializable(KEY_LIST_LESSON_SELECTED, lessonEntities);
     bundle.putBoolean(KEY_ISAPPEND, isAppend);
     bundle.putString(KEY_STRING_LESSON_SELECTEDS, lessonSelected);
     
-    if (lessonEntities.get(0).getPath().contains("/Kanji/")) {
-      forward(new KanjiQuestionFragment(), bundle);
-    } else if (lessonEntities.get(0).getPath().contains("/Listen/")) {
-    
-    } else {
-      forward(new VocabularyQuestionFragment(), bundle);
+    if (lessonEntities.get(0).getPath().contains("/English/Vocabulary/")) {
+      forward(new EnglishVocabularyFragment(), bundle);
     }
   }
   

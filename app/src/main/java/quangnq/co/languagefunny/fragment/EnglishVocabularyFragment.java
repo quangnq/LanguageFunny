@@ -2,6 +2,7 @@ package quangnq.co.languagefunny.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.entity.Choice;
 import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
+import quangnq.co.languagefunny.entity.LessonEntity;
 import quangnq.co.languagefunny.entity.LessonEntityManager;
 import quangnq.co.languagefunny.entity.QuestionEntity;
 import quangnq.co.languagefunny.entity.QuestionEntityManager;
@@ -72,6 +74,16 @@ public class EnglishVocabularyFragment extends QuestionFragment {
         return true;
       }
     });
+  
+    tvPronounceWord.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View view) {
+        if (btnConirmNext.getText().toString().equals(NEXT_BUTTON)) {
+          openDeleteDialog("Confirm", "You want to delete this question ???");
+        }
+        return true;
+      }
+    });
     
     return view;
   }
@@ -98,12 +110,13 @@ public class EnglishVocabularyFragment extends QuestionFragment {
   @Override
   void initial() {
     entities.clear();
-    ArrayList<Integer> integers = getArguments().getIntegerArrayList("list_lesson");
+    LessonEntityManager lessonEntities = (LessonEntityManager) getArguments().getSerializable(KEY_LIST_LESSON_SELECTED);
     ArrayList<String> entityStrings = FileCommon.readFile(PATH_ENGLISH_VOCABULARY + "vocabulary.txt");
     EnglishVocabuaryEntityManager allEntities = new EnglishVocabuaryEntityManager();
     allEntities.createListFromArrayString(entityStrings);
-    for (Integer integer : integers) {
-      for (int i = integer*50; i < allEntities.size() && i < integer*50 + 50; i++) {
+    for (LessonEntity lessonEntity : lessonEntities) {
+      int position = Integer.parseInt(lessonEntity.getId());
+      for (int i = position*50; i < allEntities.size() && i < position*50 + 50; i++) {
         entities.add(allEntities.get(i));
       }
     }
@@ -115,6 +128,7 @@ public class EnglishVocabularyFragment extends QuestionFragment {
         }
       }
     }
+    
     index = 0;
     
     for (EnglishVocabuaryEntity entity : entities) {
@@ -263,7 +277,6 @@ public class EnglishVocabularyFragment extends QuestionFragment {
       case R.id.btn_conirm_next:
         if (btnConirmNext.getText().equals(NEXT_BUTTON)) {
           executeButtonNext();
-          
         } else {
           setDisplayControllAfterSelected();
           executeSelected(false);
@@ -290,6 +303,28 @@ public class EnglishVocabularyFragment extends QuestionFragment {
         }
         break;
     }
+  }
+  
+  private void openDeleteDialog(String title, String content) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(getMainActivity());
+    builder.setTitle(title);
+    builder.setMessage(content);
+    builder.setCancelable(false);
+    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        currentEntity.deleteQuestionToFile();
+        executeButtonNext();
+      }
+    });
+    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        dialogInterface.cancel();
+      }
+    });
+    AlertDialog alertDialog = builder.create();
+    alertDialog.show();
   }
   
   @Override
