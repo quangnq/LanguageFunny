@@ -313,7 +313,7 @@ public class EnglishVocabularyFragment extends QuestionFragment {
     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialogInterface, int i) {
-        currentEntity.deleteQuestionToFile();
+        //currentEntity.deleteQuestionToFile();
         executeButtonNext();
       }
     });

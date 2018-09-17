@@ -24,7 +24,7 @@ import quangnq.co.languagefunny.entity.LessonEntityManager;
  * Created by quang on 03/03/2018.
  */
 
-public class LessonFragment extends BaseFragment implements LessonAdapter.OnItemAction {
+public class EnglishLessonFragment extends BaseFragment implements LessonAdapter.OnItemAction {
   LessonEntityManager lessonEntities = new LessonEntityManager();
   LearningTypeEntity learningTypeEntity;
   TextView tvLessonLearned;
@@ -61,21 +61,22 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
     Button btnEnter = (Button) view.findViewById(R.id.btn_enter);
     
     LessonAdapter adapter;
-    String path = FileCommon.getListFilePath(learningTypeEntity.getPath()).get(0);
-    ArrayList<String> entityStrings = FileCommon.readFile(path);
-    int numderLesson = entityStrings.size()/50;
-    if (entityStrings.size()%50 > 1) {
-      numderLesson++;
+    if (learningTypeEntity.getPath().contains("/English/Vocabulary/")) {
+      String path = learningTypeEntity.getPath() + "vocabulary.txt";
+      ArrayList<String> entityStrings = FileCommon.readFile(path);
+      int numderLesson = entityStrings.size()/50;
+      if (entityStrings.size()%50 > 1) {
+        numderLesson++;
+      }
+      LessonEntity entity;
+      for (int i = 0; i < numderLesson; i++) {
+        entity = new LessonEntity(String.valueOf(i), path, learningTypeEntity);
+        lessonEntities.add(entity);
+      }
+      adapter = new LessonAdapter(getActivity(), lessonEntities);
+      listView.setAdapter(adapter);
+      adapter.setOnListViewAction(this);
     }
-    LessonEntity entity;
-    for (int i = 0; i < numderLesson; i++) {
-      entity = new LessonEntity(i, path, learningTypeEntity);
-      lessonEntities.add(entity);
-    }
-    adapter = new LessonAdapter(getActivity(), lessonEntities);
-    listView.setAdapter(adapter);
-    adapter.setOnListViewAction(this);
-    
     
     btnEnter.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -92,7 +93,7 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
   
   public void onItemShortClick(LessonEntity entity, boolean isChecked) {
     for (int i = 0; i < lessonEntities.size(); i++) {
-      if (entity.getId() == lessonEntities.get(i).getId()) {
+      if (entity.getId().equals(lessonEntities.get(i).getId())) {
         lessonEntities.get(i).setChecked(isChecked);
         return;
       }
@@ -139,4 +140,14 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
       forward(new EnglishVocabularyFragment(), bundle);
     }
   }
+  
+  private ArrayList<LessonEntity> createListEntity(ArrayList<String> list) {
+    LessonEntity entity;
+    for (String id : list) {
+      entity = new LessonEntity(id, learningTypeEntity.getPath() + "/" + id, learningTypeEntity);
+      lessonEntities.add(entity);
+    }
+    return lessonEntities;
+  }
+  
 }

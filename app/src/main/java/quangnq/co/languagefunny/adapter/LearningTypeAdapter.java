@@ -5,18 +5,20 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import quangnq.co.languagefunny.R;
+import quangnq.co.languagefunny.entity.BaseEntity;
 import quangnq.co.languagefunny.entity.LearningTypeEntity;
 
 /**
  * Created by quang on 3/5/2018.
  */
 
-public class LearningTypeAdapter extends BaseAdapter<LearningTypeEntity> {
+public class LearningTypeAdapter extends ArrayAdapter<LearningTypeEntity> {
   // View lookup cache
   private static class ViewHolder {
     TextView id;
@@ -24,6 +26,16 @@ public class LearningTypeAdapter extends BaseAdapter<LearningTypeEntity> {
   
   public LearningTypeAdapter(@NonNull Context context, ArrayList data) {
     super(context, R.layout.fragment_learning_type, data);
+  }
+  
+  public OnItemAction onItemAction;
+  
+  public interface OnItemAction {
+    void onItemShortClick(LearningTypeEntity entity);
+  }
+  
+  public void setOnListViewAction(OnItemAction listener) {
+    this.onItemAction = listener;
   }
   
   @Override

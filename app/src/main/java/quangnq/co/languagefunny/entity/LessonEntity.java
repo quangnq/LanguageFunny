@@ -6,17 +6,21 @@ import java.io.Serializable;
  * Created by quang on 3/18/2018.
  */
 
-public class LessonEntity extends BaseEntity implements Serializable {
+public class LessonEntity {
+  private int id;
+  
+  private String path;
+  
   private boolean isChecked;
   
   private LearningTypeEntity learningTypeEntity;
   
   public LessonEntity() {
-    super();
   }
   
-  public LessonEntity(String id, String path, LearningTypeEntity learningTypeEntity) {
-    super(id, path);
+  public LessonEntity(int id, String path, LearningTypeEntity learningTypeEntity) {
+    this.id = id;
+    this.path = path;
     this.learningTypeEntity = learningTypeEntity;
   }
   
@@ -32,7 +36,20 @@ public class LessonEntity extends BaseEntity implements Serializable {
     return learningTypeEntity;
   }
   
-  public void setLearningTypeEntity(LearningTypeEntity learningTypeEntity) {
-    this.learningTypeEntity = learningTypeEntity;
+  public int getId() {
+    return id;
   }
+  
+  public void setId(int id) {
+    this.id = id;
+  }
+  
+  public String getPath() {
+    return path;
+  }
+  
+  public void setPath(String path) {
+    this.path = path;
+  }
+  
 }

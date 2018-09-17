@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -12,13 +13,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import quangnq.co.languagefunny.R;
+import quangnq.co.languagefunny.entity.BaseEntity;
 import quangnq.co.languagefunny.entity.LessonEntity;
 
 /**
  * Created by quang on 3/5/2018.
  */
 
-public class LessonAdapter extends BaseAdapter<LessonEntity> {
+public class LessonAdapter extends ArrayAdapter<LessonEntity> {
   public OnItemAction onItemLessonAction;
   // View lookup cache
   private static class ViewHolder {
@@ -67,7 +69,6 @@ public class LessonAdapter extends BaseAdapter<LessonEntity> {
         onItemLessonAction.onItemShortClick(entity, isChecked);
       }
     });
-  
     
     viewHolder.id.setText(entity.getId());
     viewHolder.checkBox.setChecked(entity.isChecked());

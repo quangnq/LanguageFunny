@@ -20,7 +20,7 @@ import quangnq.co.languagefunny.entity.LanguageEntity;
  * Created by quang on 4/20/2018.
  */
 
-public class LanguageFragment extends BaseFragment<LanguageEntity> implements BaseAdapter.OnItemAction<LanguageEntity> {
+public class LanguageFragment extends BaseFragment implements LanguageAdapter.OnItemAction {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

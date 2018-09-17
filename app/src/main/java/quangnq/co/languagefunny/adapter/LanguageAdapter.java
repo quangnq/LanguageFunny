@@ -5,26 +5,38 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import quangnq.co.languagefunny.R;
+import quangnq.co.languagefunny.entity.BaseEntity;
 import quangnq.co.languagefunny.entity.LanguageEntity;
 
 /**
  * Created by quang on 4/20/2018.
  */
 
-public class LanguageAdapter extends BaseAdapter<LanguageEntity> {
+public class LanguageAdapter extends ArrayAdapter<LanguageEntity> {
   
   // View lookup cache
   private static class ViewHolder {
     TextView id;
   }
   
+  public OnItemAction onItemAction;
+  
   public LanguageAdapter(@NonNull Context context, ArrayList data) {
     super(context, R.layout.item_language, data);
+  }
+  
+  public interface OnItemAction {
+    void onItemShortClick(LanguageEntity entity);
+  }
+  
+  public void setOnListViewAction(OnItemAction listener) {
+    this.onItemAction = listener;
   }
   
   @Override

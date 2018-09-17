@@ -14,7 +14,7 @@ import quangnq.co.languagefunny.entity.BaseEntity;
  * Created by quang on 4/20/2018.
  */
 
-public class BaseFragment<E extends BaseEntity> extends Fragment implements JICommon {
+public class BaseFragment extends Fragment implements JICommon {
   
   @Override
   public void onCreate(Bundle savedInstanceState) {

@@ -21,7 +21,7 @@ import quangnq.co.languagefunny.entity.LearningTypeEntity;
 /**
  * Created by quang on 03/03/2018.
  */
-public class LearningTypeFragment extends BaseFragment<LearningTypeEntity> implements BaseAdapter.OnItemAction<LearningTypeEntity> {
+public class LearningTypeFragment extends BaseFragment implements LearningTypeAdapter.OnItemAction {
   private LanguageEntity languageEntity;
   
   @Override
