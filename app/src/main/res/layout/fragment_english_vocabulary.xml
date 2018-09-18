@@ -115,7 +115,7 @@
     android:orientation="vertical">
     
     <TextView
-      android:id="@+id/tv_content"
+      android:id="@+id/tv_vietnam_word"
       android:layout_width="match_parent"
       android:layout_height="85dp"
       android:layout_margin="5dp"
@@ -126,7 +126,7 @@
       android:typeface="serif" />
     
     <TextView
-      android:id="@+id/tv_display"
+      android:id="@+id/tv_pronounce_word"
       android:layout_width="match_parent"
       android:layout_height="85dp"
       android:layout_margin="5dp"

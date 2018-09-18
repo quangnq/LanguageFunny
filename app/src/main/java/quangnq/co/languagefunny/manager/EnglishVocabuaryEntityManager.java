@@ -3,7 +3,7 @@ package quangnq.co.languagefunny.manager;
 import java.util.ArrayList;
 import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
 
-public class EnglishVocabuaryEntityManager extends ArrayList<EnglishVocabuaryEntity> {
+public class EnglishVocabuaryEntityManager extends EntityManager<EnglishVocabuaryEntity> {
   
   public EnglishVocabuaryEntityManager(){}
   

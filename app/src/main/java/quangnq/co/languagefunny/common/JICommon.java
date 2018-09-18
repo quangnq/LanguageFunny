@@ -9,6 +9,7 @@ public interface JICommon {
   String KEY_ISAPPEND = "isAppend";
   String KEY_STRING_LESSON_SELECTEDS = "lessonSelecteds";
   String KEY_LIST_LESSON_SELECTED = "list_lesson_selected";
+  String KEY_QUESTION_SELECTED = "question_selected";
   
   String PATH_LANGUAGE_FUNNY = "/sdcard/LanguageFunny";
   String FILE_LESSON_LEARNED = "/0/learned.txt";
