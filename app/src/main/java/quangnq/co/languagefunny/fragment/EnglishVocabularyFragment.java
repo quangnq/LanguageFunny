@@ -3,7 +3,6 @@ package quangnq.co.languagefunny.fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,48 +11,34 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import quangnq.co.languagefunny.R;
-import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.common.SoundManager;
 import quangnq.co.languagefunny.entity.Choice;
 import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
-import quangnq.co.languagefunny.entity.LessonEntity;
-import quangnq.co.languagefunny.entity.LessonEntityManager;
 import quangnq.co.languagefunny.manager.EnglishVocabuaryEntityManager;
 
 /**
  * Created by quang on 5/19/2018.
  */
 
-public class EnglishVocabularyFragment extends BaseFragment implements View.OnClickListener {
+public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuaryEntity, EnglishVocabuaryEntityManager> implements View.OnClickListener {
   
-  Button btnSound, btnAdd, btnConirmNext, btnEnglishWordOne, btnEnglishWordTwo, btnEnglishWordThree, btnEnglishWordFour;
-  TextView tvClock, tvQuestionTrue, tvQuestionAnswered, tvQuestionSum, tvVietnamWord, tvPronounceWord;
-  ArrayList<Choice> listChoice = new ArrayList<>();
-  
-  EnglishVocabuaryEntityManager entitiesTemp = new EnglishVocabuaryEntityManager();
-  EnglishVocabuaryEntityManager entities = new EnglishVocabuaryEntityManager();
-  EnglishVocabuaryEntity currentEntity;
-  
-  int index;
+  Button btnSound, btnEnglishWordOne, btnEnglishWordTwo, btnEnglishWordThree, btnEnglishWordFour;
+  TextView tvVietnamWord, tvPronounceWord;
   
   /**
    * manage sound
    */
-  private SoundManager mSoundManager;
+  private SoundManager mSoundManager = new SoundManager(getMainActivity());
   
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    
-  }
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_english_vocabulary, container, false);
+  
+    entitiesTemp = new EnglishVocabuaryEntityManager();
     
     btnSound = (Button) view.findViewById(R.id.btn_sound);
     btnAdd = (Button) view.findViewById(R.id.btn_add);
@@ -100,7 +85,6 @@ public class EnglishVocabularyFragment extends BaseFragment implements View.OnCl
     return view;
   }
   
-  
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
@@ -117,7 +101,8 @@ public class EnglishVocabularyFragment extends BaseFragment implements View.OnCl
     mSoundManager.setPlay(currentEntity.getLessonEntity().getPath() + "/vocabulary/" + currentEntity.getId());
   }
 
-  void initial() {
+  @Override
+  public void initial() {
     entitiesTemp.clear();
     entitiesTemp.addAll(entities);
     
@@ -133,8 +118,9 @@ public class EnglishVocabularyFragment extends BaseFragment implements View.OnCl
     Collections.shuffle(entitiesTemp);
     display();
   }
-
-  void display (){
+  
+  @Override
+  public void display (){
     if (index >= entitiesTemp.size()) {
       showDialog("You are finished those Lesson", "You are continue test");
       return;
@@ -180,7 +166,8 @@ public class EnglishVocabularyFragment extends BaseFragment implements View.OnCl
     btnAdd.setEnabled(false);
   }
   
-  void setDisplayControllAfterSelected () {
+  @Override
+  public void setDisplayControllAfterSelected () {
     if (listChoice.get(0).isTrue)
       btnEnglishWordOne.setBackgroundResource(R.drawable.bcg_bt_qs_true);
     if (listChoice.get(1).isTrue)
@@ -198,60 +185,6 @@ public class EnglishVocabularyFragment extends BaseFragment implements View.OnCl
     tvVietnamWord.setText(currentEntity.getVietnamWord());
     tvPronounceWord.setText(currentEntity.getPronounceWord());
   }
-  
-  void executeSelected(boolean isChoosed) {
-    if (isChoosed) {
-      if (currentEntity.getNumberAgain() > 0) {
-        currentEntity.setNumberAgain(currentEntity.getNumberAgain()-1);
-      } else {
-        currentEntity.setNumberAgain(0);
-      }
-      Toast.makeText(getActivity(), "Number Again +" + currentEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
-      currentEntity.setIsSave(NOT_SAVE);
-      currentEntity.updateToFile();
-      int numberTrue = Integer.parseInt(tvQuestionTrue.getText().toString());
-      numberTrue++;
-      tvQuestionTrue.setText(Integer.toString(numberTrue));
-      btnAdd.setEnabled(true);
-    } else {
-      addQuestion();
-    }
-    int answered = Integer.parseInt(tvQuestionAnswered.getText().toString());
-    answered++;
-    tvQuestionAnswered.setText(Integer.toString(answered));
-    
-  }
-  
-  boolean clickButton(int numberClick) {
-    setDisplayControllAfterSelected();
-    if (listChoice.get(numberClick).isTrue) {
-      executeSelected(true);
-      return true;
-    }
-    executeSelected(false);
-    return false;
-  }
-
-  void addQuestion() {
-
-    entitiesTemp.add(currentEntity);
-    tvQuestionSum.setText(Integer.toString(entitiesTemp.size()));
-
-    if (currentEntity.getNumberAgain() != 5) {
-      currentEntity.setNumberAgain(5);
-      currentEntity.setIsSave(1);
-      currentEntity.updateToFile();
-    }
-    Toast.makeText(getActivity(), "Number Again +" + currentEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
-  }
-
-  void executeButtonNext() {
-    index++;
-    btnConirmNext.setText(CONFIRM_BUTTON);
-    display();
-  }
-  
-  
   
   @Override
   public void onClick(View v) {
@@ -292,29 +225,6 @@ public class EnglishVocabularyFragment extends BaseFragment implements View.OnCl
         }
         break;
     }
-  }
-  
-  private void openDeleteDialog(String title, String content) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(getMainActivity());
-    builder.setTitle(title);
-    builder.setMessage(content);
-    builder.setCancelable(false);
-    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialogInterface, int i) {
-        currentEntity.deleteQuestionToFile();
-        entities.remove(entities.getPosition(currentEntity.getId()));
-        executeButtonNext();
-      }
-    });
-    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialogInterface, int i) {
-        dialogInterface.cancel();
-      }
-    });
-    AlertDialog alertDialog = builder.create();
-    alertDialog.show();
   }
   
   void openEditDialog() {
@@ -372,28 +282,5 @@ public class EnglishVocabularyFragment extends BaseFragment implements View.OnCl
       }
     });
     builder.create().show();
-  }
-  
-  void showDialog(String title, String content) {
-    
-    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setTitle(title);
-    builder.setMessage(content);
-    builder.setCancelable(false);
-    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialogInterface, int i) {
-        initial();
-        dialogInterface.dismiss();
-      }
-    });
-    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialogInterface, int i) {
-        forward(getBackFragment());
-      }
-    });
-    AlertDialog alertDialog = builder.create();
-    alertDialog.show();
   }
 }

@@ -3,7 +3,7 @@ package quangnq.co.languagefunny.manager;
 import java.util.ArrayList;
 import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
 
-public class EnglishVocabuaryEntityManager extends EntityManager<EnglishVocabuaryEntity> {
+public class EnglishVocabuaryEntityManager extends AEntityManager<EnglishVocabuaryEntity> {
   
   public EnglishVocabuaryEntityManager(){}
   
@@ -33,12 +33,4 @@ public class EnglishVocabuaryEntityManager extends EntityManager<EnglishVocabuar
     }
   }
   
-  public int getPosition(String id) {
-    for (int i = 0; i < this.size(); i++) {
-      if (this.get(i).getId().equals(id)) {
-        return i;
-      }
-    }
-    return -1;
-  }
 }

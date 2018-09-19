@@ -4,50 +4,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import quangnq.co.languagefunny.common.FileCommon;
+import quangnq.co.languagefunny.fragment.AQuestionFragment;
 /**
  * Created by quang on 9/8/2018.
  */
-public class EnglishVocabuaryEntity extends BaseEntity {
+public class EnglishVocabuaryEntity extends AQuestionEntity {
   
   private String englishWord;
   private String kindWord;
   private String pronounceWord;
   private String vietnamWord;
-  private int isSave;
-  private int numberAgain;
   private String soundID;
-  private LessonEntity lessonEntity;
   
-  public void updateToFile() {
-    ArrayList<String> list = FileCommon.readFile(this.getLessonEntity().getPath());
-    for (int i = 0; i < list.size(); i++) {
-      String id = list.get(i).split("_")[0];
-      if (this.getId().equals(id)) {
-        list.remove(i);
-        list.add(this.createString());
-        Collections.sort(list);
-        FileCommon.writeFile(this.getLessonEntity().getPath(), list, false);
-        return;
-      }
-    }
-  }
-  
+  @Override
   public String createString () {
     return this.getId() + "_" + this.englishWord + "_" + this.kindWord + "_" + this.pronounceWord + "_"
-        + this.vietnamWord + "_" + this.isSave + "_" + this.numberAgain + "_" + this.soundID;
-  }
-  
-  public void deleteQuestionToFile() {
-    ArrayList<String> list = FileCommon.readFile(this.getLessonEntity().getPath());
-    for (int i = 0; i < list.size(); i++) {
-      String id = list.get(i).split("_")[0];
-      if (this.getId().equals(id)) {
-        list.remove(i);
-        Collections.sort(list);
-        FileCommon.writeFile(this.getLessonEntity().getPath(), list, false);
-        return;
-      }
-    }
+        + this.vietnamWord + "_" + this.getIsSave() + "_" + this.getNumberAgain() + "_" + this.soundID;
   }
   
   public String getEnglishWord() {
@@ -82,22 +54,6 @@ public class EnglishVocabuaryEntity extends BaseEntity {
     this.vietnamWord = vietnamWord;
   }
   
-  public int getIsSave() {
-    return isSave;
-  }
-  
-  public void setIsSave(int isSave) {
-    this.isSave = isSave;
-  }
-  
-  public int getNumberAgain() {
-    return numberAgain;
-  }
-  
-  public void setNumberAgain(int numberAgain) {
-    this.numberAgain = numberAgain;
-  }
-  
   public String getSoundID() {
     return soundID;
   }
@@ -106,11 +62,4 @@ public class EnglishVocabuaryEntity extends BaseEntity {
     this.soundID = soundID;
   }
   
-  public LessonEntity getLessonEntity() {
-    return lessonEntity;
-  }
-  
-  public void setLessonEntity(LessonEntity lessonEntity) {
-    this.lessonEntity = lessonEntity;
-  }
 }

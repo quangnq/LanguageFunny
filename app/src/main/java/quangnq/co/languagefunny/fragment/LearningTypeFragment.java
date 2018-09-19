@@ -12,7 +12,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import quangnq.co.languagefunny.R;
-import quangnq.co.languagefunny.adapter.BaseAdapter;
 import quangnq.co.languagefunny.adapter.LearningTypeAdapter;
 import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.entity.LanguageEntity;

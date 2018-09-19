@@ -15,8 +15,7 @@ public class LessonEntity {
   
   private LearningTypeEntity learningTypeEntity;
   
-  public LessonEntity() {
-  }
+  public LessonEntity() {}
   
   public LessonEntity(int id, String path, LearningTypeEntity learningTypeEntity) {
     this.id = id;

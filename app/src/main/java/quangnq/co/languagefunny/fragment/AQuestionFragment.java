@@ -1,98 +1,38 @@
 package quangnq.co.languagefunny.fragment;
 
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import quangnq.co.languagefunny.R;
-import quangnq.co.languagefunny.common.FileCommon;
+import quangnq.co.languagefunny.entity.AQuestionEntity;
 import quangnq.co.languagefunny.entity.Choice;
-import quangnq.co.languagefunny.entity.LessonEntityManager;
-import quangnq.co.languagefunny.entity.QuestionEntity;
-import quangnq.co.languagefunny.entity.QuestionEntityManager;
+import quangnq.co.languagefunny.manager.AEntityManager;
 
 /**
  * Created by quang on 4/21/2018.
  */
 
-public abstract class AQuestionFragment extends BaseFragment {
+public abstract class AQuestionFragment<E extends AQuestionEntity, M extends AEntityManager<E>> extends BaseFragment {
   
-  QuestionEntityManager questionEntityManager = new QuestionEntityManager();
-  QuestionEntity currentQuestionEntity;
-  int index;
+  Button btnAdd, btnConirmNext;
+  TextView tvClock, tvQuestionTrue, tvQuestionAnswered, tvQuestionSum;
+  ArrayList<Choice> listChoice = new ArrayList<>();
   
+  public E currentEntity;
+  public int index;
   
+  M entitiesTemp;
+  M entities;
   
-  private void openDeleteDialog(String title, String content) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(getMainActivity());
-    builder.setTitle(title);
-    builder.setMessage(content);
-    builder.setCancelable(false);
-    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialogInterface, int i) {
-        currentQuestionEntity.deleteQuestionToFile();
-        executeButtonNext();
-      }
-    });
-    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialogInterface, int i) {
-        dialogInterface.cancel();
-      }
-    });
-    AlertDialog alertDialog = builder.create();
-    alertDialog.show();
-  }
+  public abstract void initial();
+  public abstract void display ();
+  public abstract void setDisplayControllAfterSelected();
   
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    initial();
-    Bundle bundle = new Bundle();
-    bundle.putSerializable(KEY_ENTITY, currentQuestionEntity.getLessonEntity().getLearningTypeEntity());
-    LessonFragment lessonFragment = new LessonFragment();
-    lessonFragment.setArguments(bundle);
-    setBackFragment(lessonFragment);
-  }
-  
-  void initial() {
-    questionEntityManager.clear();
-    Toast.makeText(getActivity(), questionEntityManager.createEntityListFromLessons((LessonEntityManager) getArguments().getSerializable(KEY_LIST_LESSON_SELECTED))
-      , Toast.LENGTH_SHORT).show();
-    index = 0;
-  }
-  
-  void display (){
-  }
-  
-  
-  
-  
-  
-  
-  void executeButtonNext() {}
-  
-  void showDialog(String title, String content) {
-    String lessonSelecteds = getArguments().getString(KEY_STRING_LESSON_SELECTEDS);
-    if (lessonSelecteds != null && !"".equals(lessonSelecteds)) {
-      if (getArguments().getBoolean(KEY_ISAPPEND)) {
-        FileCommon.writeFile(currentQuestionEntity.getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, true);
-      } else {
-        FileCommon.writeFile(currentQuestionEntity.getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED, lessonSelecteds, false);
-      }
-    }
+  public void showDialog(String title, String content) {
     
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
     builder.setTitle(title);
@@ -115,106 +55,76 @@ public abstract class AQuestionFragment extends BaseFragment {
     alertDialog.show();
   }
   
-  void openEditDialog() {
-    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-    // Get the layout inflater
-    LayoutInflater inflater = getActivity().getLayoutInflater();
-    View view = inflater.inflate(R.layout.dialog_question_update, null);
-    final EditText editContent = (EditText) view.findViewById(R.id.content_input);
-    final EditText editDisplay = (EditText) view.findViewById(R.id.display_input);
-    final EditText editAnswer = (EditText) view.findViewById(R.id.answer_input);
-    editContent.setText(currentQuestionEntity.getContent());
-    editDisplay.setText(currentQuestionEntity.getDisplay());
-    editAnswer.setText(currentQuestionEntity.getAnswer());
-    builder.setView(view)
-      .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int id) {
-          String content = String.valueOf(editContent.getText()).trim();
-          String display = String.valueOf(editDisplay.getText()).trim();
-          String answer = String.valueOf(editAnswer.getText()).trim();
-          if (!"".equals(content)) {
-            currentQuestionEntity.setContent(content);
-          }
-          if (!"".equals(display)) {
-            currentQuestionEntity.setDisplay(display);
-          }
-          if (!"".equals(answer)) {
-            currentQuestionEntity.setAnswer(answer);
-          }
-          currentQuestionEntity.updateToFile();
-          Toast.makeText(getActivity(), "Update Success", Toast.LENGTH_SHORT).show();
-          tvConten.setText(currentQuestionEntity.getContent());
-          if (!"".equals(tvDisplay.getText())) {
-            tvDisplay.setText(currentQuestionEntity.getDisplay());
-          }
-          
-          if (listChoice.get(0).isTrue)
-            btnOne.setText(currentQuestionEntity.getAnswer());
-          if (listChoice.get(1).isTrue)
-            btnTwo.setText(currentQuestionEntity.getAnswer());
-          if (listChoice.get(2).isTrue)
-            btnThree.setText(currentQuestionEntity.getAnswer());
-          if (listChoice.get(3).isTrue)
-            btnFour.setText(currentQuestionEntity.getAnswer());
-        }
-      }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface dialog, int id) {
-        dialog.cancel();
+  public void openDeleteDialog(String title, String content) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(getMainActivity());
+    builder.setTitle(title);
+    builder.setMessage(content);
+    builder.setCancelable(false);
+    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        currentEntity.deleteQuestionToFile();
+        entities.remove(entities.getPosition(currentEntity.getId()));
+        executeButtonNext();
       }
     });
-    builder.create().show();
+    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialogInterface, int i) {
+        dialogInterface.cancel();
+      }
+    });
+    AlertDialog alertDialog = builder.create();
+    alertDialog.show();
   }
   
-  @Override
-  public void onClick(View v) {
-    switch (v.getId()) {
-      case R.id.btn_add:
-        addQuestion();
-        btnAdd.setEnabled(false);
-        break;
-      case R.id.btn_change_level:
-        executeButtonChange();
-        break;
-      case R.id.btn_conirm_next:
-        if (btnConirmNext.getText().equals(NEXT_BUTTON)) {
-          executeButtonNext();
-          
-        } else {
-          setDisplayControllAfterSelected();
-          executeSelected(false);
-          
-        }
-        break;
-      case R.id.btn_one:
-        if (!clickButton(0)) {
-          btnOne.setBackgroundResource(R.drawable.bcg_bt_qs_false);
-        }
-        break;
-      case R.id.btn_two:
-        if (!clickButton(1)) {
-          btnTwo.setBackgroundResource(R.drawable.bcg_bt_qs_false);
-        }
-        break;
-      case R.id.btn_three:
-        if (!clickButton(2)) {
-          btnThree.setBackgroundResource(R.drawable.bcg_bt_qs_false);
-        }
-        break;
-      case R.id.btn_four:
-        if (!clickButton(3)) {
-          btnFour.setBackgroundResource(R.drawable.bcg_bt_qs_false);
-        }
-        break;
+  public void executeButtonNext() {
+    index++;
+    btnConirmNext.setText(CONFIRM_BUTTON);
+    display();
+  }
+  
+  void executeSelected(boolean isChoosed) {
+    if (isChoosed) {
+      if (currentEntity.getNumberAgain() > 0) {
+        currentEntity.setNumberAgain(currentEntity.getNumberAgain()-1);
+      } else {
+        currentEntity.setNumberAgain(0);
+      }
+      Toast.makeText(getActivity(), "Number Again +" + currentEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
+      currentEntity.setIsSave(NOT_SAVE);
+      currentEntity.updateToFile();
+      int numberTrue = Integer.parseInt(tvQuestionTrue.getText().toString());
+      numberTrue++;
+      tvQuestionTrue.setText(Integer.toString(numberTrue));
+      btnAdd.setEnabled(true);
+    } else {
+      addQuestion();
     }
+    int answered = Integer.parseInt(tvQuestionAnswered.getText().toString());
+    answered++;
+    tvQuestionAnswered.setText(Integer.toString(answered));
   }
   
-  void executeButtonChange() {
-  
+  void addQuestion() {
+    entitiesTemp.add(currentEntity);
+    tvQuestionSum.setText(Integer.toString(entitiesTemp.size()));
+    
+    if (currentEntity.getNumberAgain() != 5) {
+      currentEntity.setNumberAgain(5);
+      currentEntity.setIsSave(1);
+      currentEntity.updateToFile();
+    }
+    Toast.makeText(getActivity(), "Number Again +" + currentEntity.getNumberAgain(), Toast.LENGTH_SHORT).show();
   }
   
-  void executeButtonAdd() {
-  
+  boolean clickButton(int numberClick) {
+    setDisplayControllAfterSelected();
+    if (listChoice.get(numberClick).isTrue) {
+      executeSelected(true);
+      return true;
+    }
+    executeSelected(false);
+    return false;
   }
-  
 }

@@ -19,9 +19,8 @@ import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
 import quangnq.co.languagefunny.entity.LearningTypeEntity;
 import quangnq.co.languagefunny.entity.LessonEntity;
-import quangnq.co.languagefunny.entity.LessonEntityManager;
+import quangnq.co.languagefunny.manager.LessonEntityManager;
 import quangnq.co.languagefunny.manager.EnglishVocabuaryEntityManager;
-import quangnq.co.languagefunny.manager.EntityManager;
 
 /**
  * Created by quang on 03/03/2018.
@@ -150,7 +149,6 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
         }
       }
     }
-    
     
     Bundle bundle = new Bundle();
     bundle.putSerializable(KEY_QUESTION_SELECTED, entities);
