@@ -42,7 +42,7 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
     
     btnSound = (Button) view.findViewById(R.id.btn_sound);
     btnAdd = (Button) view.findViewById(R.id.btn_add);
-    btnConirmNext = (Button) view.findViewById(R.id.btn_conirm_next);
+    btnConirmNext = (Button) view.findViewById(R.id.btn_confirm_next);
     
     tvClock = (TextView) view.findViewById(R.id.tv_clock);
     tvQuestionTrue = (TextView) view.findViewById(R.id.tv_question_true);
@@ -98,7 +98,7 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
   }
   
   void executeButtonSound() {
-    mSoundManager.setPlay(currentEntity.getLessonEntity().getPath() + "/vocabulary/" + currentEntity.getId());
+    mSoundManager.setPlay(currentEntity.getLessonEntity().getLearningTypeEntity().getPath() + "/Sound/" + currentEntity.getEnglishWord() + ".mp3");
   }
 
   @Override
@@ -125,6 +125,7 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
       showDialog("You are finished those Lesson", "You are continue test");
       return;
     }
+    
     currentEntity = entitiesTemp.get(index);
     tvVietnamWord.setText("");
     tvPronounceWord.setText("");
@@ -164,6 +165,7 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
     btnEnglishWordFour.setEnabled(true);
   
     btnAdd.setEnabled(false);
+    executeButtonSound();
   }
   
   @Override
@@ -196,7 +198,7 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
       case R.id.btn_sound:
         executeButtonSound();
         break;
-      case R.id.btn_conirm_next:
+      case R.id.btn_confirm_next:
         if (btnConirmNext.getText().equals(NEXT_BUTTON)) {
           executeButtonNext();
         } else {
@@ -214,12 +216,12 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
           btnEnglishWordTwo.setBackgroundResource(R.drawable.bcg_bt_qs_false);
         }
         break;
-      case R.id.btn_three:
+      case R.id.btn_english_word_three:
         if (!clickButton(2)) {
           btnEnglishWordThree.setBackgroundResource(R.drawable.bcg_bt_qs_false);
         }
         break;
-      case R.id.btn_four:
+      case R.id.btn_english_word_four:
         if (!clickButton(3)) {
           btnEnglishWordFour.setBackgroundResource(R.drawable.bcg_bt_qs_false);
         }

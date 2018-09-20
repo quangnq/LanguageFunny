@@ -64,10 +64,9 @@ public class SoundManager {
             sMediaPlayer.reset();
             sMediaPlayer = null;
         }
-        Uri myUri = Uri.parse(path);
-        sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
-            sMediaPlayer.setDataSource(mActivity.getApplicationContext(), myUri);
+            sMediaPlayer = new MediaPlayer();
+            sMediaPlayer.setDataSource(path);
             sMediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();

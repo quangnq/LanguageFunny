@@ -138,6 +138,7 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
     for (LessonEntity lessonEntity : lessonEntities) {
       int position = lessonEntity.getId();
       for (int i = position*50; i < allEntities.size() && i < position*50 + 50; i++) {
+        allEntities.get(i).setLessonEntity(lessonEntity);
         entities.add(allEntities.get(i));
       }
     }
