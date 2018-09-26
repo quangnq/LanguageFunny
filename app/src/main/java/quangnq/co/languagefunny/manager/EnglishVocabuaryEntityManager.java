@@ -29,6 +29,7 @@ public class EnglishVocabuaryEntityManager extends AEntityManager<EnglishVocabua
       entity.setIsSave(Integer.parseInt(arr[5]));
       entity.setNumberAgain(Integer.parseInt(arr[6]));
       entity.setSoundID(arr[7]);
+      entity.setDelete(Integer.parseInt(arr[8].trim()));
       this.add(entity);
     }
   }
@@ -36,6 +37,9 @@ public class EnglishVocabuaryEntityManager extends AEntityManager<EnglishVocabua
   public EnglishVocabuaryEntity getEntityById(String id){
     for (EnglishVocabuaryEntity entity : this) {
       if (entity.getId().equals(id)) {
+        if (entity.getDelete() == 1) {
+          return null;
+        }
         return entity;
       }
     }

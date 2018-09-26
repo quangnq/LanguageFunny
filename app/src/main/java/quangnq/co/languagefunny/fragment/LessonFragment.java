@@ -32,6 +32,7 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
   LessonEntityManager lessonEntities = new LessonEntityManager();
   LearningTypeEntity learningTypeEntity;
   TextView tvLessonLearned;
+  TextView title;
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_lesson, container, false);
-    TextView title = view.findViewById(R.id.screen_title);
+    title = view.findViewById(R.id.screen_title);
     title.setText(learningTypeEntity.getId() + " " + title.getText());
     tvLessonLearned = view.findViewById(R.id.tv_lesson_learned);
     ArrayList<String> listLessonLearned = FileCommon.readFile(learningTypeEntity.getPath() + FILE_LESSON_LEARNED);
@@ -78,6 +79,20 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
     listView.setAdapter(adapter);
     adapter.setOnListViewAction(this);
     
+  
+    title.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View view) {
+        ArrayList<String> entityStrings = FileCommon.readFile(lessonEntities.get(0).getPath());
+        EnglishVocabuaryEntityManager allEntities = new EnglishVocabuaryEntityManager(entityStrings);
+        for (EnglishVocabuaryEntity englishVocabuaryEntity : allEntities) {
+          englishVocabuaryEntity.setIsSave(0);
+          englishVocabuaryEntity.setNumberAgain(0);
+          englishVocabuaryEntity.updateToFile();
+        }
+        return true;
+      }
+    });
     
     btnEnter.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -160,7 +175,7 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
   
     for (EnglishVocabuaryEntity entity : allEntities) {
       if (entity.getIsSave() == 1 || entity.getNumberAgain() > 0) {
-        if (entities.getPosition(entity.getId()) == -1) {
+        if (entity.getDelete() == 0 && entities.getPosition(entity.getId()) == -1) {
           entity.setLessonEntity(lessonEntities.get(0));
           entities.add(entity);
         }

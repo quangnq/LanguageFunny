@@ -63,7 +63,8 @@ public abstract class AQuestionFragment<E extends AQuestionEntity, M extends AEn
     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialogInterface, int i) {
-        currentEntity.deleteQuestionToFile();
+        currentEntity.setDelete(1);
+        currentEntity.updateToFile();
         entities.remove(entities.getPosition(currentEntity.getId()));
         executeButtonNext();
       }

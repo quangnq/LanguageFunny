@@ -9,6 +9,7 @@ public abstract class AQuestionEntity extends BaseEntity {
   private LessonEntity lessonEntity;
   private int isSave;
   private int numberAgain;
+  private int delete;
   
   public abstract String createString();
   
@@ -64,4 +65,11 @@ public abstract class AQuestionEntity extends BaseEntity {
     this.numberAgain = numberAgain;
   }
   
+  public int getDelete() {
+    return delete;
+  }
+  
+  public void setDelete(int delete) {
+    this.delete = delete;
+  }
 }
