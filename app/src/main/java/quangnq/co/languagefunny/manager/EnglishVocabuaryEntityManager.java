@@ -33,4 +33,13 @@ public class EnglishVocabuaryEntityManager extends AEntityManager<EnglishVocabua
     }
   }
   
+  public EnglishVocabuaryEntity getEntityById(String id){
+    for (EnglishVocabuaryEntity entity : this) {
+      if (entity.getId().equals(id)) {
+        return entity;
+      }
+    }
+    return null;
+  }
+  
 }

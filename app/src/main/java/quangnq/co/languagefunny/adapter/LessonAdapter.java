@@ -70,7 +70,7 @@ public class LessonAdapter extends ArrayAdapter<LessonEntity> {
       }
     });
     
-    viewHolder.id.setText("Lesson " + (entity.getId() + 1));
+    viewHolder.id.setText("Lesson " + entity.getId());
     viewHolder.checkBox.setChecked(entity.isChecked());
     return convertView;
   }

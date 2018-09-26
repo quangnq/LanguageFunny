@@ -13,6 +13,7 @@ public interface JICommon {
   
   String PATH_LANGUAGE_FUNNY = "/sdcard/LanguageFunny";
   String FILE_LESSON_LEARNED = "/0/learned.txt";
+  String FILE_DIV = "/0/divfile.txt";
   String PATH_JAPAN_VOCABULARY = "/sdcard/LanguageFunny/Japanese/Vocabulary";
   
   String PATH_ENGLISH_VOCABULARY = "/sdcard/LanguageFunny/English/Vocabulary/";
@@ -29,9 +30,6 @@ public interface JICommon {
   
   int SAVE = 1;
   int NOT_SAVE = 0;
-  
-  int DIFFICULT = 1;
-  int EASY = 0;
   
   int MAX_NUMBER_AGAIN = 6;
   int MIN_NUMBER_AGAIN = 1;

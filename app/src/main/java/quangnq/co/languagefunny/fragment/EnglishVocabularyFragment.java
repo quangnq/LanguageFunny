@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.Collections;
 
 import quangnq.co.languagefunny.R;
+import quangnq.co.languagefunny.common.FileCommon;
 import quangnq.co.languagefunny.common.SoundManager;
 import quangnq.co.languagefunny.entity.Choice;
 import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
@@ -98,7 +99,7 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
   }
   
   void executeButtonSound() {
-    mSoundManager.setPlay(currentEntity.getLessonEntity().getLearningTypeEntity().getPath() + "/Sound/" + currentEntity.getEnglishWord() + ".mp3");
+    mSoundManager.setPlay(currentEntity.getLessonEntity().getLearningTypeEntity().getPath() + "/Sound/" + currentEntity.getSoundID() + ".mp3");
   }
 
   @Override
@@ -123,6 +124,8 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
   public void display (){
     if (index >= entitiesTemp.size()) {
       showDialog("You are finished those Lesson", "You are continue test");
+      FileCommon.writeFile(currentEntity.getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED,
+          getArguments().getString(KEY_STRING_LESSON_SELECTEDS), true);
       return;
     }
     

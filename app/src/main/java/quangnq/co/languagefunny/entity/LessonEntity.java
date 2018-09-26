@@ -6,10 +6,7 @@ import java.io.Serializable;
  * Created by quang on 3/18/2018.
  */
 
-public class LessonEntity {
-  private int id;
-  
-  private String path;
+public class LessonEntity extends BaseEntity {
   
   private boolean isChecked;
   
@@ -17,9 +14,8 @@ public class LessonEntity {
   
   public LessonEntity() {}
   
-  public LessonEntity(int id, String path, LearningTypeEntity learningTypeEntity) {
-    this.id = id;
-    this.path = path;
+  public LessonEntity(String id, String path, LearningTypeEntity learningTypeEntity) {
+    super(id, path);
     this.learningTypeEntity = learningTypeEntity;
   }
   
@@ -35,20 +31,5 @@ public class LessonEntity {
     return learningTypeEntity;
   }
   
-  public int getId() {
-    return id;
-  }
-  
-  public void setId(int id) {
-    this.id = id;
-  }
-  
-  public String getPath() {
-    return path;
-  }
-  
-  public void setPath(String path) {
-    this.path = path;
-  }
   
 }

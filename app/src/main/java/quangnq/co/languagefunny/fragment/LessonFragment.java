@@ -16,9 +16,11 @@ import java.util.ArrayList;
 import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.adapter.LessonAdapter;
 import quangnq.co.languagefunny.common.FileCommon;
+import quangnq.co.languagefunny.common.JICommon;
 import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
 import quangnq.co.languagefunny.entity.LearningTypeEntity;
 import quangnq.co.languagefunny.entity.LessonEntity;
+import quangnq.co.languagefunny.manager.AEntityManager;
 import quangnq.co.languagefunny.manager.LessonEntityManager;
 import quangnq.co.languagefunny.manager.EnglishVocabuaryEntityManager;
 
@@ -26,7 +28,7 @@ import quangnq.co.languagefunny.manager.EnglishVocabuaryEntityManager;
  * Created by quang on 03/03/2018.
  */
 
-public class LessonFragment extends BaseFragment implements LessonAdapter.OnItemAction {
+public class LessonFragment extends BaseFragment implements LessonAdapter.OnItemAction,JICommon {
   LessonEntityManager lessonEntities = new LessonEntityManager();
   LearningTypeEntity learningTypeEntity;
   TextView tvLessonLearned;
@@ -64,16 +66,14 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
     
     LessonAdapter adapter;
     String path = FileCommon.getListFilePath(learningTypeEntity.getPath()).get(0);
-    ArrayList<String> entityStrings = FileCommon.readFile(path);
-    int numberLesson = entityStrings.size()/50;
-    if (entityStrings.size()%50 > 1) {
-      numberLesson++;
-    }
+    ArrayList<String> entityStrings = FileCommon.readFile(learningTypeEntity.getPath() + FILE_DIV);
+    
     LessonEntity entity;
-    for (int i = 0; i < numberLesson; i++) {
-      entity = new LessonEntity(i, path, learningTypeEntity);
+    for (String string : entityStrings) {
+      entity = new LessonEntity(string, path, learningTypeEntity);
       lessonEntities.add(entity);
     }
+    
     adapter = new LessonAdapter(getActivity(), lessonEntities);
     listView.setAdapter(adapter);
     adapter.setOnListViewAction(this);
@@ -131,21 +131,37 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
         lessonSelected = lessonSelected + entity.getId() + ",";
       }
     }
-  
+    
+    ArrayList<String> entityStrings = FileCommon.readFile(lessonEntities.get(0).getPath());
     EnglishVocabuaryEntityManager entities = new EnglishVocabuaryEntityManager();
-    ArrayList<String> entityStrings = FileCommon.readFile(PATH_ENGLISH_VOCABULARY + "vocabulary.txt");
     EnglishVocabuaryEntityManager allEntities = new EnglishVocabuaryEntityManager(entityStrings);
+    AQuestionFragment fragment;
+    if (lessonEntities.get(0).getPath().contains("/English/Vocabulary/")) {
+      fragment = new EnglishVocabularyFragment();
+    } else {
+      fragment = new EnglishVocabularyFragment();
+    }
+    
+    
     for (LessonEntity lessonEntity : lessonEntities) {
-      int position = lessonEntity.getId();
-      for (int i = position*50; i < allEntities.size() && i < position*50 + 50; i++) {
-        allEntities.get(i).setLessonEntity(lessonEntity);
-        entities.add(allEntities.get(i));
+      if (lessonEntity.isChecked()) {
+        int start = Integer.parseInt(lessonEntity.getId().split("_")[0]);
+        int end = Integer.parseInt(lessonEntity.getId().split("_")[1]);
+        for (int i = start; i <= allEntities.size() && i <= end; i++) {
+          int count = 10000 + i;
+          EnglishVocabuaryEntity entity = allEntities.getEntityById(String.valueOf(count));
+          if (entity != null) {
+            entity.setLessonEntity(lessonEntities.get(0));
+            entities.add(entity);
+          }
+        }
       }
     }
   
     for (EnglishVocabuaryEntity entity : allEntities) {
       if (entity.getIsSave() == 1 || entity.getNumberAgain() > 0) {
         if (entities.getPosition(entity.getId()) == -1) {
+          entity.setLessonEntity(lessonEntities.get(0));
           entities.add(entity);
         }
       }
@@ -153,9 +169,7 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
     
     Bundle bundle = new Bundle();
     bundle.putSerializable(KEY_QUESTION_SELECTED, entities);
-    
-    if (lessonEntities.get(0).getPath().contains("/English/Vocabulary/")) {
-      forward(new EnglishVocabularyFragment(), bundle);
-    }
+    bundle.putString(KEY_STRING_LESSON_SELECTEDS, lessonSelected);
+    forward(fragment, bundle);
   }
 }
