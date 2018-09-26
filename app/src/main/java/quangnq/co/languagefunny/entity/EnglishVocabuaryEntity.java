@@ -19,7 +19,7 @@ public class EnglishVocabuaryEntity extends AQuestionEntity {
   @Override
   public String createString () {
     return this.getId() + "_" + this.englishWord + "_" + this.kindWord + "_" + this.pronounceWord + "_"
-        + this.vietnamWord + "_" + this.getIsSave() + "_" + this.getNumberAgain() + "_" + this.soundID;
+        + this.vietnamWord + "_" + this.getIsSave() + "_" + this.getNumberAgain() + "_" + this.soundID + "_" + this.getDelete();
   }
   
   public String getEnglishWord() {
