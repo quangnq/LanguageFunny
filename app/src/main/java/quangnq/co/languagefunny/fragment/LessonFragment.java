@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,9 +21,8 @@ import quangnq.co.languagefunny.common.JICommon;
 import quangnq.co.languagefunny.entity.EnglishVocabuaryEntity;
 import quangnq.co.languagefunny.entity.LearningTypeEntity;
 import quangnq.co.languagefunny.entity.LessonEntity;
-import quangnq.co.languagefunny.manager.AEntityManager;
-import quangnq.co.languagefunny.manager.LessonEntityManager;
 import quangnq.co.languagefunny.manager.EnglishVocabuaryEntityManager;
+import quangnq.co.languagefunny.manager.LessonEntityManager;
 
 /**
  * Created by quang on 03/03/2018.
@@ -90,6 +90,7 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
           englishVocabuaryEntity.setNumberAgain(0);
           englishVocabuaryEntity.updateToFile();
         }
+        Toast.makeText(getActivity(), "Reset success", Toast.LENGTH_SHORT).show();
         return true;
       }
     });

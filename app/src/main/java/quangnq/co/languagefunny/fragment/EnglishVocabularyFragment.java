@@ -189,6 +189,7 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
     btnConirmNext.setText(NEXT_BUTTON);
     tvVietnamWord.setText(currentEntity.getVietnamWord());
     tvPronounceWord.setText(currentEntity.getPronounceWord());
+    executeButtonSound();
   }
   
   @Override
@@ -197,6 +198,7 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
       case R.id.btn_add:
         addQuestion();
         btnAdd.setEnabled(false);
+        executeButtonSound();
         break;
       case R.id.btn_sound:
         executeButtonSound();
