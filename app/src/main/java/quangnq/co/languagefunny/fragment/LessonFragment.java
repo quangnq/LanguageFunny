@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import quangnq.co.languagefunny.R;
 import quangnq.co.languagefunny.adapter.LessonAdapter;
@@ -50,6 +51,7 @@ public class LessonFragment extends BaseFragment implements LessonAdapter.OnItem
     title.setText(learningTypeEntity.getId() + " " + title.getText());
     tvLessonLearned = view.findViewById(R.id.tv_lesson_learned);
     ArrayList<String> listLessonLearned = FileCommon.readFile(learningTypeEntity.getPath() + FILE_LESSON_LEARNED);
+    Collections.reverse(listLessonLearned);
     String lessonLearned = "";
     for (String s : listLessonLearned) {
       lessonLearned = lessonLearned + s + "\n";

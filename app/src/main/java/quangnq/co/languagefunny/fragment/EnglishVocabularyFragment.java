@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import quangnq.co.languagefunny.R;
@@ -115,8 +116,8 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
         entity.updateToFile();
       }
     }
-
-    Collections.shuffle(entitiesTemp);
+    // Random entities
+//    Collections.shuffle(entitiesTemp);
     display();
   }
   
@@ -124,8 +125,13 @@ public class EnglishVocabularyFragment extends AQuestionFragment<EnglishVocabuar
   public void display (){
     if (index >= entitiesTemp.size()) {
       showDialog("You are finished those Lesson", "You are continue test");
+      ArrayList<String> list = FileCommon.readFile(currentEntity.getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED);
+      if (list.size() > 50) {
+        list.remove(0);
+      }
+      list.add(getArguments().getString(KEY_STRING_LESSON_SELECTEDS));
       FileCommon.writeFile(currentEntity.getLessonEntity().getLearningTypeEntity().getPath() + FILE_LESSON_LEARNED,
-          getArguments().getString(KEY_STRING_LESSON_SELECTEDS), true);
+          list, false);
       return;
     }
     
